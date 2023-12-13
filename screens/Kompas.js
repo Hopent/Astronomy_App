@@ -63,8 +63,8 @@ const Kompas = () => {
               <ImageBackground
                 source={require("../assets/compassFace.jpg")}
                 style={{
-                  height: 320,
-                  width: 320,
+                  height: 440,
+                  width: 440,
                   alignItems: 'center',
                   justifyContent: 'center',
                   transform: [{ rotate: `${0}deg` }]
@@ -73,25 +73,13 @@ const Kompas = () => {
                 <Image
                   source={require("../assets/compass.jpg")}
                   style={{
-                    height: 200,
-                    width: 10,
+                    height: 400,
+                    width: 20,
                     transform: [{ rotate: `${rotation}deg` }],
                   }}
                 />
               </ImageBackground>
-              <View style={styles.dataContainer}>
-                <Text style={styles.dataText}>
-                  Magnetometer Data:
-                </Text>
-                <Text>
-                  {JSON.stringify(magnetometerData)}
-                </Text>
-                <Text>
-                  {rotation}
-                </Text>
-              </View>
-            </View>
-        
+            </View>  
       <TopNav_2 />
       <BottomNav />
     </View>
@@ -122,6 +110,9 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   container: {
+    position: "absolute",
+    top: "25%",
+    left: "-5%",
     flex: 1,
     justifyContent: 'center',
     paddingTop: Constants.statusBarHeight,
