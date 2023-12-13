@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
     color: Color.colorDimgray_100,
     textAlign: "left",
     width: 76,
-    height: 11,
+    height: 20,
   },
   danuta: {
     position: "absolute",
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
     color: Color.text,
     textAlign: "left",
     width: 71,
-    height: 17,
+    height: 20,
   },
   menu: {
     position: "absolute",
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
     color: Color.text,
     textAlign: "left",
     width: 87,
-    height: 14,
+    height: 20,
   },
   wyloguj: {
     width: 87,
@@ -251,7 +251,7 @@ const styles = StyleSheet.create({
     color: Color.text,
     textAlign: "left",
     width: 107,
-    height: 17,
+    height: 20,
   },
   kompas1: {
     width: 107,
@@ -282,7 +282,7 @@ const styles = StyleSheet.create({
     color: Color.text,
     textAlign: "center",
     width: 183,
-    height: 14,
+    height: 20,
     marginLeft: 1,
   },
   ukad: {
@@ -316,7 +316,7 @@ const styles = StyleSheet.create({
     color: Color.text,
     textAlign: "left",
     width: 59,
-    height: 14,
+    height: 20,
     marginLeft: 26,
   },
   galeria1: {
@@ -349,7 +349,7 @@ const styles = StyleSheet.create({
     color: Color.text,
     textAlign: "left",
     width: 52,
-    height: 14,
+    height: 20,
     marginLeft: 26,
   },
   mapa1: {
@@ -382,7 +382,7 @@ const styles = StyleSheet.create({
     color: Color.text,
     textAlign: "left",
     width: 76,
-    height: 14,
+    height: 20,
     marginLeft: 26,
   },
   katalog1: {
@@ -415,7 +415,7 @@ const styles = StyleSheet.create({
     color: Color.text,
     textAlign: "left",
     width: 53,
-    height: 14,
+    height: 20,
     marginLeft: 28,
   },
   home1: {
