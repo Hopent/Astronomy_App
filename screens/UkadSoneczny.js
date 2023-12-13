@@ -1,8 +1,9 @@
 import * as React from "react";
 import { Text, StyleSheet, View, Pressable } from "react-native";
-import { Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { FontSize, FontFamily, Color, Border } from "../GlobalStyles";
+import BottomNav from "../components/BottomNav";
+import TopNav_2 from "../components/TopNav_2";
 
 const UkadSoneczny = () => {
   const navigation = useNavigation();
@@ -20,85 +21,8 @@ Przeciągnij dwoma palcami, aby przybliżyć.`}</Text>
       >{`Naciśnij na planetę, aby poznać więcej szczegółów.
 
 Przeciągnij dwoma palcami, aby przybliżyć.`}</Text>
-      <View style={styles.grnyPasekNawigacyjny}>
-        <Text style={styles.menu}>Menu</Text>
-        <Pressable
-          style={styles.ikonaPowiadomie}
-          onPress={() => navigation.navigate("Powiadomienia")}
-        >
-          <Image
-            style={styles.icon}
-            contentFit="cover"
-            source={require("../assets/ikona-powiadomie.png")}
-          />
-        </Pressable>
-        <Pressable
-          style={styles.ikonaMenu}
-          onPress={() => navigation.navigate("Menu")}
-        >
-          <Image
-            style={styles.icon1}
-            contentFit="cover"
-            source={require("../assets/ikona-menu.png")}
-          />
-        </Pressable>
-        <Pressable
-          style={styles.ikonaWyszukiwarki}
-          onPress={() => navigation.navigate("Quiz1")}
-        >
-          <Image
-            style={styles.icon2}
-            contentFit="cover"
-            source={require("../assets/ikona-wyszukiwarki.png")}
-          />
-        </Pressable>
-      </View>
-      <View style={styles.dolnyPasekNawigacyjny}>
-        <Text style={styles.home}>Home</Text>
-        <Text style={styles.katalog}>Katalog</Text>
-        <Text style={styles.galeria}>Galeria</Text>
-        <Text style={styles.mapa}>Mapa</Text>
-        <Pressable
-          style={styles.ikonkaStronyGwnej}
-          onPress={() => navigation.navigate("Home")}
-        >
-          <Image
-            style={styles.icon3}
-            contentFit="cover"
-            source={require("../assets/ikonka-strony-gwnej6.png")}
-          />
-        </Pressable>
-        <Pressable
-          style={styles.ikonkaKatalogu}
-          onPress={() => navigation.navigate("KatalogPlanet")}
-        >
-          <Image
-            style={styles.icon4}
-            contentFit="cover"
-            source={require("../assets/ikonka-katalogu.png")}
-          />
-        </Pressable>
-        <Pressable
-          style={styles.ikonkaMapy}
-          onPress={() => navigation.navigate("Mapa")}
-        >
-          <Image
-            style={styles.icon5}
-            contentFit="cover"
-            source={require("../assets/ikonka-mapy.png")}
-          />
-        </Pressable>
-        <Pressable
-          style={styles.ikonkaGalerii}
-          onPress={() => navigation.navigate("Galeria")}
-        >
-          <Image
-            style={styles.icon6}
-            contentFit="cover"
-            source={require("../assets/ikonka-galerii1.png")}
-          />
-        </Pressable>
-      </View>
+     <TopNav_2 />
+     <BottomNav />
     </View>
   );
 };
@@ -324,14 +248,6 @@ const styles = StyleSheet.create({
     bottom: "40%",
     width: "9.19%",
     height: "62.13%",
-  },
-  dolnyPasekNawigacyjny: {
-    position: "absolute",
-    marginLeft: -169,
-    top: 700,
-    left: "50%",
-    width: 327,
-    height: 47,
   },
   ukadSoneczny1: {
     position: "relative",

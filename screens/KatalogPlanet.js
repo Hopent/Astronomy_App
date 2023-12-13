@@ -587,22 +587,6 @@ const styles = StyleSheet.create({
     width: "9.19%",
     height: "62.13%",
   },
-  dolnyPasekNawigacyjny: {
-    position: "absolute",
-    height: "11.49%",
-    width: "78.33%",
-    top: "56.72%",
-    right: "11.39%",
-    bottom: "31.78%",
-    left: "10.29%",
-  },
-  dolnyPasekNawigacyjny1: {
-    position: "absolute",
-    top: 468,
-    left: -32,
-    width: 418,
-    height: 409,
-  },
   menu: {
     position: "absolute",
     top: "7.69%",

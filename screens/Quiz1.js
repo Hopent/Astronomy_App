@@ -450,14 +450,6 @@ const styles = StyleSheet.create({
     width: "9.19%",
     height: "62.13%"
   },
-  dolnyPasekNawigacyjny: {
-    position: "absolute",
-    marginLeft: -169,
-    top: 700,
-    left: "50%",
-    width: 327,
-    height: 47
-  },
   quiz1: {
     position: "relative",
     borderRadius: Border.br_21xl,

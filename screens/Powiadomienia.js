@@ -61,52 +61,7 @@ const Powiadomienia = () => {
         <View style={styles.filter} />
       </View>
       <Text style={styles.powiadomienia}>Powiadomienia</Text>
-      <View style={styles.dolnyPasekNawigacyjny}>
-        <Text style={styles.home}>Home</Text>
-        <Text style={styles.katalog}>Katalog</Text>
-        <Text style={styles.galeria}>Galeria</Text>
-        <Text style={styles.mapa}>Mapa</Text>
-        <Pressable
-          style={styles.ikonkaStronyGwnej}
-          onPress={() => navigation.navigate("Home")}
-        >
-          <Image
-            style={styles.icon}
-            contentFit="cover"
-            source={require("../assets/ikonka-strony-gwnej3.png")}
-          />
-        </Pressable>
-        <Pressable
-          style={styles.ikonkaKatalogu}
-          onPress={() => navigation.navigate("KatalogPlanet")}
-        >
-          <Image
-            style={styles.icon1}
-            contentFit="cover"
-            source={require("../assets/ikonka-katalogu2.png")}
-          />
-        </Pressable>
-        <Pressable
-          style={styles.ikonkaMapy}
-          onPress={() => navigation.navigate("Mapa")}
-        >
-          <Image
-            style={styles.icon2}
-            contentFit="cover"
-            source={require("../assets/ikonka-mapy.png")}
-          />
-        </Pressable>
-        <Pressable
-          style={styles.ikonkaGalerii}
-          onPress={() => navigation.navigate("Galeria")}
-        >
-          <Image
-            style={styles.icon3}
-            contentFit="cover"
-            source={require("../assets/ikonka-galerii1.png")}
-          />
-        </Pressable>
-      </View>
+      <BottomNav />
       <View style={styles.grnyPasekNawigacyjny}>
         <Pressable
           style={styles.ikonaPowiadomie}
@@ -400,14 +355,6 @@ const styles = StyleSheet.create({
     bottom: "40%",
     width: "9.19%",
     height: "62.13%",
-  },
-  dolnyPasekNawigacyjny: {
-    position: "absolute",
-    marginLeft: -169,
-    top: 700,
-    left: "50%",
-    width: 327,
-    height: 47,
   },
   icon4: {
     width: "100%",
