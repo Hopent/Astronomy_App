@@ -290,6 +290,7 @@ const styles = StyleSheet.create({
     textAlign: "left",
   },
   rectangle1: {
+    paddingLeft: 10,
     flex: 1,
     position: "relative",
     borderRadius: Border.br_xs,
