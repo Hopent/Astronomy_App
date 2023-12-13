@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
-import { Pressable, StyleSheet, View, Text, TextInput } from "react-native";
+import { Pressable, StyleSheet, View, Text, TextInput,SafeAreaView,ScrollView,StatusBar, } from "react-native";
 import { Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { FontSize, FontFamily, Color, Border, Padding } from "../GlobalStyles";
@@ -19,6 +19,8 @@ const Ustawienia2 = () => {
   };
 
   return (
+    <>
+
     <View style={styles.ustawienia2}>
       <Text style={styles.edytujProfil}>Edytuj profil</Text>
       <Pressable
@@ -94,6 +96,7 @@ const Ustawienia2 = () => {
         </View>
       </View>
     </View>
+    </>
   );
 };
 
