@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import { Text, StyleSheet, Pressable, View, TextInput } from "react-native";
 import { Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -6,6 +7,17 @@ import { FontSize, FontFamily, Color, Border, Padding } from "../GlobalStyles";
 
 const Rejestracja = () => {
   const navigation = useNavigation();
+  const [login, setLogin] = useState("");
+  const [password, setPassword] = useState("");
+  const [password2, setPassword2] = useState("");
+  
+  const handleRegister = () => {
+    if (password == password2) {
+      navigation.navigate("Logowanie");
+    } else {
+      alert("Hasła nie są takie same. Proszę wprowadzić poprawne hasło.");
+    }
+  };
 
   return (
     <View style={styles.rejestracja3}>
@@ -27,7 +39,7 @@ const Rejestracja = () => {
       <Text style={styles.rejestracja2}>Rejestracja</Text>
       <Pressable
         style={styles.przycisk}
-        onPress={() => navigation.navigate("Home")}
+        onPress={handleRegister}
       >
         <View style={styles.rectangle} />
         <Text style={styles.zalogujSi2}>Zarejestruj się</Text>
@@ -35,15 +47,29 @@ const Rejestracja = () => {
       <View style={styles.panelLogowania}>
         <View style={styles.loginParent}>
           <Text style={styles.login}>Login</Text>
-          <TextInput style={styles.rectangle1} />
+          <TextInput
+              placeholder="Wprowadz login"
+              className="rectangle1"
+              onChangeText={(text) => setLogin(text)}
+              style={styles.rectangle1} />
         </View>
         <View style={styles.hasoParent}>
           <Text style={styles.haso}>Hasło</Text>
-          <TextInput style={styles.rectangle2} />
+          <TextInput
+              secureTextEntry={true}
+              placeholder="Wprowadz hasło"
+              className="rectangle1"
+              onChangeText={(text) => setPassword(text)}
+              style={styles.rectangle1} />
         </View>
         <View style={styles.potwierdHasoParent}>
           <Text style={styles.potwierdHaso}>Potwierdź hasło</Text>
-          <TextInput style={styles.rectangle3} />
+          <TextInput
+              secureTextEntry={true}
+              placeholder="Potwierdź hasło"
+              className="rectangle1"
+              onChangeText={(text) => setPassword2(text)}
+              style={styles.rectangle1} />
         </View>
       </View>
       <Pressable
@@ -185,7 +211,7 @@ const styles = StyleSheet.create({
   przycisk: {
     position: "absolute",
     marginLeft: -90,
-    top: 650,
+    top: 600,
     left: "50%",
     shadowColor: "rgba(0, 0, 0, 0.25)",
     shadowOffset: {
@@ -296,12 +322,12 @@ const styles = StyleSheet.create({
     height: 24,
   },
   rejestracja3: {
-    position: "relative",
+    position: "absolute",
     borderRadius: Border.br_21xl,
     backgroundColor: Color.colorGray_500,
     flex: 1,
     width: "100%",
-    height: 780,
+    height: 880,
     overflow: "hidden",
   },
 });
