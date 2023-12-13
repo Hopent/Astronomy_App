@@ -235,6 +235,7 @@ const styles = StyleSheet.create({
     textAlign: "left",
   },
   rectangle1: {
+    paddingLeft: 10,
     position: "absolute",
     height: "73.97%",
     top: "26.03%",
