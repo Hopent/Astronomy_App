@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import { Pressable, StyleSheet, View, Text, TextInput } from "react-native";
 import { Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -6,7 +7,17 @@ import { FontSize, FontFamily, Color, Border, Padding } from "../GlobalStyles";
 
 const Ustawienia3 = () => {
   const navigation = useNavigation();
+  const [password, setPassword] = useState("");
+  const [password2, setPassword2] = useState("");
+  const [password3, setPassword3] = useState("");
 
+  const handlePassword = () => {
+    if (password2 == password3) {
+      navigation.navigate("Ustawienia");
+    } else {
+      alert("Błedne hasło.");
+    }
+  };
   return (
     <View style={styles.ustawienia3}>
       <Text style={styles.zmieHaso}>Zmień hasło</Text>
@@ -29,7 +40,7 @@ const Ustawienia3 = () => {
       <Text style={styles.danuta}>Danuta</Text>
       <Pressable
         style={styles.przyciskiWyboru}
-        onPress={() => navigation.navigate("Ustawienia")}
+        onPress={handlePassword}
       >
         <Text style={styles.zapiszZmiany}>Zapisz zmiany</Text>
         <Image
@@ -48,19 +59,34 @@ const Ustawienia3 = () => {
         <View style={styles.potwierdzNoweHasoParent}>
           <Text style={styles.potwierdzNoweHaso}>Potwierdz Nowe Hasło</Text>
           <View style={styles.frame}>
-            <TextInput style={styles.rectangle} />
+          <TextInput
+              secureTextEntry={true}
+              placeholder="Potwierdź nowe hasło"
+              className="rectangle1"
+              onChangeText={(text) => setPassword3(text)}
+              style={styles.rectangle1} />
           </View>
         </View>
         <View style={styles.noweHasoParent}>
           <Text style={styles.noweHaso}>Nowe Hasło</Text>
           <View style={styles.frame1}>
-            <TextInput style={styles.rectangle1} />
+          <TextInput
+              secureTextEntry={true}
+              placeholder="Wprowadz nowe hasło"
+              className="rectangle1"
+              onChangeText={(text) => setPassword2(text)}
+              style={styles.rectangle1} />
           </View>
         </View>
         <View style={styles.hasoParent}>
           <Text style={styles.haso}>Hasło</Text>
           <View style={styles.frame2}>
-            <TextInput style={styles.rectangle2} />
+          <TextInput
+              secureTextEntry={true}
+              placeholder="Wprowadz aktualne hasło"
+              className="rectangle1"
+              onChangeText={(text) => setPassword(text)}
+              style={styles.rectangle1} />
           </View>
         </View>
       </View>
@@ -141,7 +167,7 @@ const styles = StyleSheet.create({
     color: Color.colorDimgray_100,
     textAlign: "left",
     width: 74,
-    height: 11,
+    height: 20,
   },
   danuta: {
     position: "absolute",
@@ -154,7 +180,7 @@ const styles = StyleSheet.create({
     color: Color.text,
     textAlign: "left",
     width: 71,
-    height: 17,
+    height: 20,
   },
   zapiszZmiany: {
     position: "relative",
@@ -329,12 +355,12 @@ const styles = StyleSheet.create({
     height: 231,
   },
   ustawienia3: {
-    position: "relative",
+    position: "absolute",
     borderRadius: Border.br_21xl,
     backgroundColor: Color.colorGray_500,
     flex: 1,
     width: "100%",
-    height: 780,
+    height: 880,
     overflow: "hidden",
   },
 });
