@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
-import { Text, StyleSheet, Pressable, View, TextInput } from "react-native";
+import { Text, StyleSheet, Pressable, View, TextInput, Linking } from "react-native";
 import { Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { FontSize, FontFamily, Color, Border, Padding } from "../GlobalStyles";
@@ -18,10 +18,18 @@ const Rejestracja = () => {
       alert("Hasła nie są takie same. Proszę wprowadzić poprawne hasło.");
     }
   };
+  
+  const handlePrivacyPolicyPress = () => {
+    const privacyPolicyURL = "https://www.lipsum.com/"; // Twój docelowy URL
+    Linking.openURL(privacyPolicyURL);
+  };
 
   return (
     <View style={styles.rejestracja3}>
-      <Text style={styles.politykPrywatnoci}>Polityką prywatności</Text>
+      <Text style={styles.politykPrywatnoci} onPress={handlePrivacyPolicyPress}>
+        Polityką prywatności
+      </Text>
+      
       <Text
         style={styles.klikajcWPoniszy}
       >{`Klikając w poniższy przycisk zgadzasz się z naszą `}</Text>
