@@ -91,7 +91,7 @@ const Ustawienia = () => {
           style={styles.politykaPrywatnociParent}
           onPress={() => Linking.openURL("https://www.lipsum.com/")}
         >
-          <Text style={styles.politykaPrywatnoci}>Polityka Firm</Text>
+          <Text style={styles.politykaPrywatnoci}>Polityka Firm </Text>
           <Image
             style={styles.vectorIcon4}
             contentFit="cover"
@@ -310,7 +310,7 @@ const styles = StyleSheet.create({
   },
   regulaminParent: {
     position: "absolute",
-    top: 125,
+    top: 140,
     left: 0,
     width: 329,
     height: 24,
@@ -340,7 +340,7 @@ const styles = StyleSheet.create({
   },
   politykaPrywatnociParent: {
     position: "absolute",
-    top: 89,
+    top: 98,
     left: 1,
     width: 329,
     height: 24,
