@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import { Image } from "react-native";
 import { StyleSheet, Pressable, Text, View, TextInput } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -6,7 +7,16 @@ import { FontSize, FontFamily, Color, Border, Padding } from "../GlobalStyles";
 
 const Logowanie = () => {
   const navigation = useNavigation();
+  const [login, setLogin] = useState("");
+  const [password, setPassword] = useState("");
 
+  const handleLogin = () => {
+    if (login == password) {
+      navigation.navigate("Home");
+    } else {
+      alert("Zły login lub hasło.");
+    }
+  };
   return (
     <View style={styles.logowanie}>
       <Pressable
@@ -33,22 +43,33 @@ const Logowanie = () => {
         </View>
         <Pressable
           style={styles.przycisk}
-          onPress={() => navigation.navigate("Home")}
+          onPress={handleLogin}
+
         >
           <View style={styles.rectangle} />
           <Text style={styles.zalogujSi2}>Zaloguj się</Text>
         </Pressable>
         <Text style={styles.zalogujSi3}>Zaloguj się</Text>
         <View style={styles.panelLogowania}>
-          <View style={styles.hasoParent}>
-            <Text style={styles.haso}>Hasło</Text>
+          <View style={styles.loginParent}>
+            <Text style={styles.haso}>Login</Text>
             <View style={styles.frame}>
-              <TextInput style={styles.rectangle1} />
+              <TextInput
+              placeholder="Wprowadz login"
+              className="rectangle1"
+              onChangeText={(text) => setLogin(text)}
+              style={styles.rectangle1} />
             </View>
           </View>
-          <View style={styles.loginParent}>
-            <Text style={styles.login}>Login</Text>
-            <TextInput style={styles.frame1} />
+          <View style={styles.hasoParent}>
+            <Text style={styles.login}>Hasło</Text>
+            <View style={styles.frame}>
+              <TextInput
+              secureTextEntry={true}
+              placeholder="Wprowadz haslo"
+              onChangeText={(text) => setPassword(text)}
+              style={styles.rectangle1} />
+            </View>
           </View>
         </View>
       </View>
@@ -65,7 +86,6 @@ const styles = StyleSheet.create({
     maxHeight: "100%",
   },
   zamknij: {
-    position: "absolute",
     left: "8.61%",
     top: "7.69%",
     right: "84.72%",
@@ -266,12 +286,12 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   logowanie: {
-    position: "relative",
+    position: "absolute",
     borderRadius: Border.br_21xl,
     backgroundColor: Color.colorGray_500,
     flex: 1,
     width: "100%",
-    height: 780,
+    height: 880,
     overflow: "hidden",
   },
 });
