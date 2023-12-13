@@ -49,14 +49,6 @@ const navigation = useNavigation();
 };
 
 const styles = StyleSheet.create({
-  maskaZCieniem: {
-    position: "absolute",
-    top: 503,
-    left: -30,
-    width: 414,
-    height: 312,
-    backgroundColor: "transparent"
-  },
   maskiDlaTa: {
     position: "absolute",
     height: "63.29%",
@@ -69,14 +61,6 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     maxHeight: "100%",
     opacity: 0.7
-  },
-  maskaZCieniem1: {
-    position: "absolute",
-    top: 503,
-    left: -30,
-    width: 414,
-    height: 312,
-    backgroundColor: "transparent"
   },
   pytanie810: {
     position: "relative",

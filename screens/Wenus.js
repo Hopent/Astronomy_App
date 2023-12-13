@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Text, StyleSheet, View, Pressable } from "react-native";
+import { Text, StyleSheet, View, Pressable,ScrollView } from "react-native";
 import { Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { FontSize, FontFamily, Color, Border, Padding } from "../GlobalStyles";
@@ -10,6 +10,7 @@ const Wenus = () => {
   const navigation = useNavigation();
 
   return (
+    <ScrollView style={styles.scrollView}>
     <View style={styles.wenus1}>
       <Text style={styles.wenus}>Wenus</Text>
       <Image
@@ -34,26 +35,25 @@ od słońca.`}</Text>
         </View>
         <View style={styles.kafelki1}>
           <Text style={styles.szczegoweDane}>Szczegółowe dane:</Text>
-          <Text
-            style={styles.charakterystykaFizycznaRed}
-          >{`Charakterystyka fizyczna:
-Średnica Wenus wynosi około 12 104 km, co czyni ją bardzo zbliżoną rozmiarami do Ziemi.
-Masa Wenus to około 0,815 masy Ziemi.
+          <Text style={styles.charakterystykaFizycznaRed}>{
+                `Charakterystyka fizyczna:
+                Średnica Wenus wynosi około 12 104 km, co czyni ją bardzo zbliżoną rozmiarami do Ziemi.
+                Masa Wenus to około 0,815 masy Ziemi.
 
-Okres obrotu:
-Wenus ma bardzo wolny okres obrotu własnego, który wynosi około 243 dni ziemskie.
-Interesującą cechą jest to, że Wenus obraca się w kierunku przeciwnym do kierunku obiegu wokół Słońca, co oznacza, że na powierzchni planety dzień trwa dłużej niż rok.
-`}</Text>
+                Okres obrotu:
+                Wenus ma bardzo wolny okres obrotu własnego, który wynosi około 243 dni ziemskie.
+                Interesującą cechą jest to, że Wenus obraca się w kierunku przeciwnym do kierunku obiegu wokół Słońca, co oznacza, że na powierzchni planety dzień trwa dłużej niż rok.`}
+          </Text>
         </View>
         <View style={styles.kafelki2}>
           <Text style={styles.atmosferaAtmosferaWenus}>{`Atmosfera:
-Atmosfera Wenus jest bardzo gęsta i składa się głównie z dwutlenku węgla (CO2).
-Obecność gęstej atmosfery powoduje efekt cieplarniany, który sprawia, że temperatura na powierzchni Wenus jest wyjątkowo wysoka.
+            Atmosfera Wenus jest bardzo gęsta i składa się głównie z dwutlenku węgla (CO2).
+            Obecność gęstej atmosfery powoduje efekt cieplarniany, który sprawia, że temperatura na powierzchni Wenus jest wyjątkowo wysoka.
 
-Temperatura na powierzchni:
-Wenus jest najgorętszą planetą w Układzie Słonecznym.
-Średnia temperatura na powierzchni planety wynosi około 467 stopni Celsiusza (872 stopnie Fahrenheita), co jest znacznie wyższe od temperatury wrzenia ołowiu.
-`}</Text>
+            Temperatura na powierzchni:
+            Wenus jest najgorętszą planetą w Układzie Słonecznym.
+            Średnia temperatura na powierzchni planety wynosi około 467 stopni Celsiusza (872 stopnie Fahrenheita), co jest znacznie wyższe od temperatury wrzenia ołowiu.`}
+          </Text>
         </View>
       </View>
       <Pressable
@@ -69,7 +69,9 @@ Wenus jest najgorętszą planetą w Układzie Słonecznym.
       </Pressable>
       <BottomNav />
       <TopNav_2 />
+      
     </View>
+    </ScrollView>
   );
 };
 

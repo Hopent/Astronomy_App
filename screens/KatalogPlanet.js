@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Text, StyleSheet, View, Pressable } from "react-native";
+import { Text, StyleSheet, View, Pressable,SafeAreaView,ScrollView,StatusBar, } from "react-native";
 import { Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { FontSize, FontFamily, Color, Border, Padding } from "../GlobalStyles";
@@ -10,6 +10,9 @@ const KatalogPlanet = () => {
   const navigation = useNavigation();
 
   return (
+    <>
+    <SafeAreaView style={styles.container}>
+    <ScrollView style={styles.scrollView}>
     <View style={styles.katalogPlanet1}>
       <Text style={styles.katalogPlanet}>Katalog planet</Text>
       <Image
@@ -89,14 +92,49 @@ const KatalogPlanet = () => {
           <Text style={styles.merkury}>Merkury</Text>
           <Text style={styles.mlnKmOd3}>58 mln km od Słońca</Text>
         </Pressable>
+        <Pressable
+          style={styles.fazaKsiyca3}
+          planet="merkury"
+          onPress={() => navigation.navigate("Wenus")}
+        >
+          <Image
+            style={styles.giphy3Icon}
+            contentFit="cover"
+            source={require("../assets/giphy-31.png")}
+          />
+          <Text style={styles.ukadSoneczny3}>Układ słoneczny</Text>
+          <Text style={styles.merkury}>Merkury</Text>
+          <Text style={styles.mlnKmOd3}>58 mln km od Słońca</Text>
+        </Pressable>
+        <Pressable
+          style={styles.fazaKsiyca3}
+          planet="merkury"
+          onPress={() => navigation.navigate("Wenus")}
+        >
+          <Image
+            style={styles.giphy3Icon}
+            contentFit="cover"
+            source={require("../assets/giphy-31.png")}
+          />
+          <Text style={styles.ukadSoneczny3}>Układ słoneczny</Text>
+          <Text style={styles.merkury}>Merkury</Text>
+          <Text style={styles.mlnKmOd3}>58 mln km od Słońca</Text>
+        </Pressable>
       </View>
-      <BottomNav />
-      <TopNav_2 />
     </View>
+    </ScrollView>
+    </SafeAreaView>
+    <BottomNav />
+    <TopNav_2 />
+    </>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: StatusBar.currentHeight,
+  },
   katalogPlanet: {
     position: "absolute",
     marginLeft: -195,
@@ -444,41 +482,6 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     paddingBottom: Padding.p_101xl,
   },
-  maskaZCieniem: {
-    position: "absolute",
-    marginLeft: -205,
-    top: 97,
-    left: "50%",
-    width: 414,
-    height: 312,
-    backgroundColor: "transparent",
-  },
-  maskaZCieniem1: {
-    position: "absolute",
-    marginLeft: -205,
-    top: 97,
-    left: "50%",
-    width: 414,
-    height: 312,
-    backgroundColor: "transparent",
-  },
-  maskaZCieniem2: {
-    position: "absolute",
-    marginLeft: -205,
-    top: 97,
-    left: "50%",
-    width: 414,
-    height: 312,
-    backgroundColor: "transparent",
-  },
-  maskaZCieniem3: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    width: 414,
-    height: 312,
-    backgroundColor: "transparent",
-  },
   icon3: {
     height: "100%",
     width: "100%",
@@ -540,7 +543,7 @@ const styles = StyleSheet.create({
     backgroundColor: Color.colorGray_500,
     flex: 1,
     width: "100%",
-    height: 780,
+    height: 1300,
   },
 });
 

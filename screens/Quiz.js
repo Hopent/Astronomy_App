@@ -78,14 +78,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: Padding.p_8xs,
     paddingVertical: Padding.p_2xs
   },
-  maskaZCieniem1: {
-    position: "absolute",
-    top: 503,
-    left: -30,
-    width: 414,
-    height: 312,
-    backgroundColor: "transparent"
-  },
   naszQuizO: {
     position: "absolute",
     marginLeft: -113,

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Text, StyleSheet, Pressable, View } from "react-native";
+import { Text, StyleSheet, Pressable, View,SafeAreaView,ScrollView } from "react-native";
 import { Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { FontSize, FontFamily, Color, Border, Padding } from "../GlobalStyles";
@@ -10,6 +10,9 @@ const KatalogGwiazd = () => {
   const navigation = useNavigation();
 
   return (
+    <>
+    <SafeAreaView style={styles.container}>
+    <ScrollView style={styles.scrollView}>
     <View style={styles.katalogGwiazd1}>
       <Text style={styles.katalogGwiazd}>Katalog gwiazd</Text>
       <Image
@@ -90,9 +93,12 @@ const KatalogGwiazd = () => {
           />
         </Pressable>
       </View>
-      <BottomNav />
-      <TopNav_2 />
     </View>
+    </ScrollView>
+    </SafeAreaView>
+    <BottomNav />
+    <TopNav_2 />
+    </>
   );
 };
 
@@ -449,40 +455,13 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     paddingBottom: Padding.p_101xl,
   },
-  maskaZCieniem: {
-    position: "absolute",
-    marginLeft: -205,
-    top: 97,
-    left: "50%",
-    width: 414,
-    height: 312,
-    backgroundColor: "transparent",
-  },
-  maskaZCieniem1: {
-    position: "absolute",
-    marginLeft: -205,
-    top: 97,
-    left: "50%",
-    width: 414,
-    height: 312,
-    backgroundColor: "transparent",
-  },
-  maskaZCieniem2: {
-    position: "absolute",
-    marginLeft: -205,
-    top: 97,
-    left: "50%",
-    width: 414,
-    height: 312,
-    backgroundColor: "transparent",
-  },
   katalogGwiazd1: {
     position: "relative",
     borderRadius: Border.br_21xl,
     backgroundColor: Color.colorGray_500,
     flex: 1,
     width: "100%",
-    height: 780,
+    height: 1300,
   },
 });
 

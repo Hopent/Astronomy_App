@@ -128,14 +128,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
   },
-  maskaZCieniem: {
-    position: "absolute",
-    top: 349,
-    left: 138,
-    width: 414,
-    height: 312,
-    backgroundColor: "transparent",
-  },
   rectangle: {
     position: "absolute",
     height: "100%",

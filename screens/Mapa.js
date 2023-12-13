@@ -1,5 +1,5 @@
 import * as React from "react";
-import {ImageBackground,StyleSheet, Text,View} from "react-native";
+import {ImageBackground,StyleSheet, Text,View,ScrollView} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { FontSize, FontFamily, Color, Border } from "../GlobalStyles";
 import BottomNav from "../components/BottomNav";
@@ -9,12 +9,14 @@ const Mapa = () => {
   const navigation = useNavigation();
 
   return (
-    <View style={styles.mapa2}>
-      <ImageBackground
-        style={styles.constellationsMapEqu1110112Icon}
-        resizeMode="contain"
-        source={require("../assets/constellationsmapequ11101121.png")}
-      />
+    <View style={styles.container}>
+      <ScrollView horizontal vertical contentContainerStyle={styles.scrollContainer}>
+        <ImageBackground
+          style={styles.constellationsMapEqu1110112Icon}
+          resizeMode="contain"
+          source={require("../assets/constellationsmapequ11101121.png")}
+        />
+      </ScrollView>
       <Text style={styles.mapa1}>Mapa</Text>
       <TopNav_2 />
       <BottomNav />
@@ -23,10 +25,16 @@ const Mapa = () => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    position: "relative",
+  },
+  scrollContainer: {
+    flexGrow: 1,
+    alignItems: "center", // Center the content horizontally
+    justifyContent: "center", // Center the content vertically
+  },
   constellationsMapEqu1110112Icon: {
-    position: "absolute",
-    top: -286,
-    left: -1025,
     width: 2400,
     height: 1196,
   },
@@ -132,7 +140,8 @@ const styles = StyleSheet.create({
     backgroundColor: Color.colorGray_500,
     flex: 1,
     width: "100%",
-    height: 780,
+    height: 1200,
+    width: 2400,
   },
 });
 
