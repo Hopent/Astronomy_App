@@ -1,15 +1,9 @@
 import * as React from "react";
-import {
-  ImageBackground,
-  StyleSheet,
-  Text,
-  Pressable,
-  View,
-  Image
-} from "react-native";
+import {ImageBackground,StyleSheet, Text,View} from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { FontSize, FontFamily, Color, Padding, Border } from "../GlobalStyles";
+import { FontSize, FontFamily, Color, Border } from "../GlobalStyles";
 import BottomNav from "../components/BottomNav";
+import TopNav_2 from "../components/TopNav_2";
 
 const Mapa = () => {
   const navigation = useNavigation();
@@ -22,39 +16,7 @@ const Mapa = () => {
         source={require("../assets/constellationsmapequ11101121.png")}
       />
       <Text style={styles.mapa1}>Mapa</Text>
-      <View style={styles.grnyPasekNawigacyjny1}>
-        <Text style={styles.menu}>Menu</Text>
-        <View style={styles.grnyPasekNawigacyjny}>
-          <Text style={styles.menu1}>Menu</Text>
-          <Pressable
-            style={styles.ikonaPowiadomie}
-            onPress={() => navigation.navigate("Powiadomienia")}>
-            <Image
-              style={styles.icon3}
-              contentFit="cover"
-              source={require("../assets/ikona-powiadomie.png")}
-            />
-          </Pressable>
-          <Pressable
-            style={styles.ikonaMenu}
-            onPress={() => navigation.navigate("Menu")}>
-            <Image
-              style={styles.icon4}
-              contentFit="cover"
-              source={require("../assets/ikona-menu.png")}
-            />
-          </Pressable>
-          <Pressable
-            style={styles.ikonaWyszukiwarki}
-            onPress={() => navigation.navigate("Quiz1")}>
-            <Image
-              style={styles.icon5}
-              contentFit="cover"
-              source={require("../assets/ikona-wyszukiwarki.png")}
-            />
-          </Pressable>
-        </View>
-      </View>
+      <TopNav_2 />
       <BottomNav />
     </View>
   );

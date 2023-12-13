@@ -4,6 +4,7 @@ import { Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Border, Color, FontSize, FontFamily } from "../GlobalStyles";
 import BottomNav from "../components/BottomNav";
+import TopNav_2 from "../components/TopNav_2";
 
 const Home = () => {
   const navigation = useNavigation();
@@ -53,39 +54,7 @@ const Home = () => {
       </View>
       <Text style={styles.witajUser}>Witaj, user</Text>
 
-      <View style={styles.grnyPasekNawigacyjny}>
-        <Text style={styles.menu}>Menu</Text>
-        <Pressable
-          style={styles.ikonaPowiadomie}
-          onPress={() => navigation.navigate("Powiadomienia")}
-        >
-          <Image
-            style={styles.icon3}
-            contentFit="cover"
-            source={require("../assets/ikona-powiadomie.png")}
-          />
-        </Pressable>
-        <Pressable
-          style={styles.ikonaMenu}
-          onPress={() => navigation.navigate("Menu")}
-        >
-          <Image
-            style={styles.icon4}
-            contentFit="cover"
-            source={require("../assets/ikona-menu.png")}
-          />
-        </Pressable>
-        <Pressable
-          style={styles.ikonaWyszukiwarki}
-          onPress={() => navigation.navigate("Quiz1")}
-        >
-          <Image
-            style={styles.icon5}
-            contentFit="cover"
-            source={require("../assets/ikona-wyszukiwarki.png")}
-          />
-        </Pressable>
-      </View>
+      <TopNav_2 />
       <BottomNav />
     </View>
   );
@@ -272,22 +241,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     width: 389,
     height: 73,
-  },
-  maskaZCieniem: {
-    position: "absolute",
-    top: 13,
-    left: 5,
-    width: 414,
-    height: 312,
-    backgroundColor: "transparent",
-  },
-  maskaZCieniem1: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    width: 414,
-    height: 312,
-    backgroundColor: "transparent",
   },
   menu: {
     position: "absolute",
