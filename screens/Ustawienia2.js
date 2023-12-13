@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import { Pressable, StyleSheet, View, Text, TextInput } from "react-native";
 import { Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -6,6 +7,16 @@ import { FontSize, FontFamily, Color, Border, Padding } from "../GlobalStyles";
 
 const Ustawienia2 = () => {
   const navigation = useNavigation();
+  const [login, setLogin] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = () => {
+    if (login == password) {
+      navigation.navigate("Ustawienia");
+    } else {
+      alert("Błedne hasło.");
+    }
+  };
 
   return (
     <View style={styles.ustawienia2}>
@@ -39,7 +50,7 @@ const Ustawienia2 = () => {
       />
       <Pressable
         style={styles.przyciskiWyboru}
-        onPress={() => navigation.navigate("Ustawienia")}
+        onPress={handleLogin}
       >
         <Text style={styles.zapiszZmiany}>Zapisz zmiany</Text>
         <Image
@@ -63,13 +74,22 @@ const Ustawienia2 = () => {
         <View style={styles.hasoParent}>
           <Text style={styles.haso}>Hasło</Text>
           <View style={styles.frame}>
-            <TextInput style={styles.rectangle} />
+          <TextInput
+              secureTextEntry={true}
+              placeholder="Wprowadz hasło"
+              className="rectangle1"
+              onChangeText={(text) => setPassword(text)}
+              style={styles.rectangle1} />
           </View>
         </View>
         <View style={styles.nowaNazwaUytkownikaParent}>
           <Text style={styles.nowaNazwaUytkownika}>Nowa nazwa użytkownika</Text>
           <View style={styles.frame1}>
-            <TextInput style={styles.rectangle1} />
+            <TextInput
+              placeholder="Wprowadz nazwe"
+              className="rectangle1"
+              onChangeText={(text) => setLogin(text)}
+              style={styles.rectangle1} />
           </View>
         </View>
       </View>
@@ -150,7 +170,7 @@ const styles = StyleSheet.create({
     color: Color.colorDimgray_100,
     textAlign: "left",
     width: 74,
-    height: 11,
+    height: 20,
   },
   danuta: {
     position: "absolute",
@@ -163,16 +183,16 @@ const styles = StyleSheet.create({
     color: Color.text,
     textAlign: "left",
     width: 71,
-    height: 17,
+    height: 20,
   },
   backgroundIcon: {
     position: "absolute",
     height: "4.62%",
     width: "10%",
-    top: "32.18%",
+    top: "28.18%",
     right: "40%",
     bottom: "63.21%",
-    left: "50%",
+    left: "59%",
     maxWidth: "100%",
     overflow: "hidden",
     maxHeight: "100%",
@@ -181,10 +201,10 @@ const styles = StyleSheet.create({
     position: "absolute",
     height: "2.83%",
     width: "6.14%",
-    top: "33.08%",
+    top: "28.88%",
     right: "41.92%",
     bottom: "64.09%",
-    left: "51.94%",
+    left: "60.5%",
     maxWidth: "100%",
     overflow: "hidden",
     maxHeight: "100%",
@@ -328,18 +348,18 @@ const styles = StyleSheet.create({
   },
   panelLogowania: {
     position: "absolute",
-    top: 351,
+    top: 391,
     left: 33,
     width: 280,
     height: 231,
   },
   ustawienia2: {
-    position: "relative",
+    position: "absolute",
     borderRadius: Border.br_21xl,
     backgroundColor: Color.colorGray_500,
     flex: 1,
     width: "100%",
-    height: 780,
+    height: 880,
     overflow: "hidden",
   },
 });
