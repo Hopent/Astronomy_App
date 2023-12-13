@@ -15,7 +15,14 @@ const Kompas = () => {
   const inclination = 87.75; // Inclination in degrees (87° 45')
 
   const [heading, setHeading] = useState(0); // Initialize heading in the component's state
-
+  
+  const normalizeRotation = (value) => {
+    let normalizedRotation = value;
+    while (normalizedRotation < 0) {
+      normalizedRotation += 360; // Dodaj 360 stopni, gdy wartość jest ujemna
+    }
+    return normalizedRotation % 360; // Zwróć znormalizowaną wartość rotacji w przedziale od 0 do 359 stopni
+  };
   useEffect(() => {
     const subscribeToMagnetometer = async () => {
       await Magnetometer.setUpdateInterval(200);
@@ -58,7 +65,7 @@ const Kompas = () => {
   return (
     <View style={styles.kompas1}>
       <Text style={styles.kompas}>Kompas</Text>
-      <Text style={styles.heading}>{(heading-inclination).toFixed(2)}°</Text>
+      <Text style={styles.heading}>{(normalizeRotation(heading-inclination)).toFixed(2)}°</Text>
         
               <View style={styles.container}>
               <ImageBackground
