@@ -442,13 +442,6 @@ const styles = StyleSheet.create({
     width: 255,
     height: 356,
   },
-  icon2: {
-    height: "100%",
-    width: "100%",
-    maxWidth: "100%",
-    overflow: "hidden",
-    maxHeight: "100%",
-  },
   zamknij: {
     position: "absolute",
     left: "6.67%",

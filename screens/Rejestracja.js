@@ -152,14 +152,6 @@ const styles = StyleSheet.create({
     width: 389,
     height: 73,
   },
-  dolnyPasekNawigacyjny: {
-    position: "absolute",
-    top: 468,
-    left: -32,
-    width: 414,
-    height: 312,
-    backgroundColor: "transparent",
-  },
   rectangle: {
     position: "absolute",
     height: "100%",
