@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
     position: "relative",
     width: 7,
     height: 12,
-    marginLeft: 173,
+    marginLeft: 200,
   },
   edytujProfilParent: {
     position: "absolute",
@@ -222,7 +222,7 @@ const styles = StyleSheet.create({
     position: "relative",
     width: 55,
     height: 24,
-    marginLeft: 172,
+    marginLeft: 200,
   },
   zmieHasoParent: {
     position: "absolute",

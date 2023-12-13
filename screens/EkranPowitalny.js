@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   frameIcon: {
     position: "absolute",
     top: 0,
-    left: 199,
+    left: 225,
     width: 304,
     height: 370,
     overflow: "hidden",
@@ -58,12 +58,6 @@ const styles = StyleSheet.create({
     width: 702,
     height: 525,
     overflow: "hidden",
-  },
-  maskaZCieniem: {
-    position: "relative",
-    width: 414,
-    height: 312,
-    backgroundColor: "transparent",
   },
   frame: {
     position: "absolute",
@@ -164,7 +158,7 @@ const styles = StyleSheet.create({
   frame3: {
     position: "absolute",
     top: 512,
-    left: -15,
+    left: 15,
     width: 390,
     height: 202,
     overflow: "hidden",

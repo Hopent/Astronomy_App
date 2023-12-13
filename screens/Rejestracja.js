@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
   klikajcWPoniszy: {
     position: "absolute",
     top: "76.67%",
-    left: 27,
+    left: 60,
     fontSize: FontSize.size_xs,
     letterSpacing: 0.3,
     fontFamily: FontFamily.montserratRegular,
@@ -157,8 +157,8 @@ const styles = StyleSheet.create({
   },
   przyciskiWyboru: {
     position: "absolute",
-    top: 231,
-    left: 53,
+    top: 255,
+    left: 90,
     width: 254,
     flexDirection: "row",
     alignItems: "center",
@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
   },
   rejestracja2: {
     position: "absolute",
-    marginTop: -271,
+    marginTop: -290,
     marginLeft: -195,
     top: "50%",
     left: "50%",
@@ -304,7 +304,7 @@ const styles = StyleSheet.create({
   panelLogowania: {
     position: "absolute",
     top: 300,
-    left: 30,
+    left: 60,
     width: 300,
     flexDirection: "column",
     alignItems: "center",

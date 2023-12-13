@@ -65,9 +65,8 @@ const styles = StyleSheet.create({
     },
     ikonaPowiadomie: {
         position: "absolute",
-        left: "91.97%",
         top: "3.85%",
-        right: "0%",
+        right: "-25%",
         bottom: "3.85%",
         width: "8.03%",
         height: "92.31%",
@@ -97,9 +96,8 @@ const styles = StyleSheet.create({
     },
     ikonaWyszukiwarki: {
         position: "absolute",
-        left: "76.59%",
         top: "7.69%",
-        right: "15.38%",
+        right: "-10.38%",
         bottom: "0%",
         width: "8.03%",
         height: "92.31%",

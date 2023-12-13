@@ -279,8 +279,8 @@ const styles = StyleSheet.create({
   },
   frame2: {
     position: "absolute",
-    top: 119,
-    left: -170,
+    top: 160,
+    left: -140,
     width: 701,
     height: 661,
     overflow: "hidden",

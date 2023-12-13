@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
   panele: {
     position: "absolute",
     top: 195,
-    left: 30,
+    left: 60,
     width: 300,
     flexDirection: "column",
     alignItems: "center",

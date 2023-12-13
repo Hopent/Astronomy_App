@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
   przyciskiWyboru: {
     position: "absolute",
     top: 190,
-    left: 53,
+    left: 80,
     width: 254,
     flexDirection: "row",
     alignItems: "center",
