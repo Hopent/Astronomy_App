@@ -9,42 +9,42 @@ import BottomNav from "../components/BottomNav";
 
 
 const Kompas = () => {
-  const navigation = useNavigation();
 
   const [magnetometerData, setMagnetometerData] = useState({});
   const [rotation, setRotation] = useState(0);
   const inclination = 87.75; // Inclination in degrees (87° 45')
 
+  const [heading, setHeading] = useState(0); // Initialize heading in the component's state
+
   useEffect(() => {
     const subscribeToMagnetometer = async () => {
-      await Magnetometer.setUpdateInterval(200); // Set the update interval for the magnetometer sensor
+      await Magnetometer.setUpdateInterval(200);
       Magnetometer.addListener(handleMagnetometerChange);
     };
 
     const handleMagnetometerChange = (result) => {
       const { x, y } = result;
 
-      let heading = 0;
+      let calculatedHeading = 0;
 
       if (x !== undefined && y !== undefined) {
-        // Calculate the heading or direction based on the x and y magnetometer data
-        heading = Math.atan2(y, x) * (180 / Math.PI);
-        if (heading < 0) {
-          heading += 360; // Convert negative angles to positive angles (0 to 360 degrees)
+        calculatedHeading = Math.atan2(y, x) * (180 / Math.PI);
+        if (calculatedHeading < 0) {
+          calculatedHeading += 360;
         }
       }
 
-      const adjustedHeading = heading - inclination; // Adjust heading by inclination
-
+      const adjustedHeading = calculatedHeading - inclination;
       let newRotation = adjustedHeading;
       if (adjustedHeading >= 360) {
-        newRotation -= 360; // Normalize the rotation to be within 0-359 degrees
+        newRotation -= 360;
       } else if (adjustedHeading < 0) {
-        newRotation += 360; // Normalize negative angles
+        newRotation += 360;
       }
 
       setMagnetometerData(result);
       setRotation(newRotation);
+      setHeading(calculatedHeading); // Update the heading in the state
     };
 
     subscribeToMagnetometer();
@@ -58,23 +58,26 @@ const Kompas = () => {
   return (
     <View style={styles.kompas1}>
       <Text style={styles.kompas}>Kompas</Text>
+      <Text style={styles.heading}>{(heading-inclination).toFixed(2)}°</Text>
         
               <View style={styles.container}>
               <ImageBackground
-                source={require("../assets/compassFace.jpg")}
+                source={require("../assets/compass_face.png")}
                 style={{
-                  height: 440,
-                  width: 440,
+                  height: 400,
+                  width: 400,
                   alignItems: 'center',
                   justifyContent: 'center',
                   transform: [{ rotate: `${0}deg` }]
                 }}
               >
                 <Image
-                  source={require("../assets/compass.jpg")}
+                  source={require("../assets/compass.png")}
                   style={{
-                    height: 400,
+                    height: 250,
                     width: 20,
+                    left: -6,
+                    bottom: -1,
                     transform: [{ rotate: `${rotation}deg` }],
                   }}
                 />
@@ -87,6 +90,16 @@ const Kompas = () => {
 };
 
 const styles = StyleSheet.create({
+  heading: {
+    position: "absolute",
+    top: 190, // Adjust this value as needed to position the heading text
+    left: 0,
+    right: 0,
+    fontSize: 20,
+    fontFamily: FontFamily.montserratBold,
+    color: Color.text,
+    textAlign: "center",
+  },
   kompas: {
     position: "absolute",
     marginLeft: -195,
@@ -112,7 +125,7 @@ const styles = StyleSheet.create({
   container: {
     position: "absolute",
     top: "25%",
-    left: "-5%",
+    left: "2%",
     flex: 1,
     justifyContent: 'center',
     paddingTop: Constants.statusBarHeight,
