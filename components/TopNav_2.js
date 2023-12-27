@@ -32,7 +32,7 @@ const TopNav_2 = () => {
             </Pressable>
             <Pressable
             style={styles.ikonaWyszukiwarki}
-            onPress={() => navigation.navigate("Quiz1")}
+            onPress={() => navigation.navigate("Quiz")}
             >
             <Image
                 style={styles.icon5}

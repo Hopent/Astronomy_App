@@ -1,180 +1,232 @@
-import * as React from "react";
-    import {StyleSheet, View, Text, Pressable} from "react-native";
-import {Image} from "react-native";
-import {useNavigation} from "@react-navigation/native";
+import React, { useState,useEffect } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet,Image,Pressable } from 'react-native';
+import { useNavigation } from "@react-navigation/native";
 import { FontSize, FontFamily, Color, Border, Padding } from "../GlobalStyles";
 import TopNav_2 from "../components/TopNav_2";
 import BottomNav from "../components/BottomNav";
-    
+
 const Quiz1 = () => {
-const navigation = useNavigation();
+  const navigation = useNavigation();
+  const questions = [
+    {
+      question: 'Which planet is known as the Red Planet?',
+      answers: ['Mars', 'Venus', 'Mercury'],
+      correctAnswer: 'Mars',
+    },
+    {
+      question: 'What is the largest planet in our solar system?',
+      answers: ['Saturn', 'Jupiter', 'Uranus'],
+      correctAnswer: 'Jupiter',
+    },
+    {
+      question: 'Which planet is known as the Red Planet?',
+      answers: ['Mars', 'Venus', 'Mercury'],
+      correctAnswer: 'Mars',
+    },
+    {
+      question: 'What is the largest planet in our solar system?',
+      answers: ['Saturn', 'Jupiter', 'Uranus'],
+      correctAnswer: 'Jupiter',
+    },{
+      question: 'Which planet is known as the Red Planet?',
+      answers: ['Mars', 'Venus', 'Mercury'],
+      correctAnswer: 'Mars',
+    },
+    {
+      question: 'What is the largest planet in our solar system?',
+      answers: ['Saturn', 'Jupiter', 'Uranus'],
+      correctAnswer: 'Jupiter',
+    },{
+      question: 'Which planet is known as the Red Planet?',
+      answers: ['Mars', 'Venus', 'Mercury'],
+      correctAnswer: 'Mars',
+    },
+    {
+      question: 'What is the largest planet in our solar system?',
+      answers: ['Saturn', 'Jupiter', 'Uranus'],
+      correctAnswer: 'Jupiter',
+    },
+    {
+      question: 'Which planet is known as the Red Planet?',
+      answers: ['Mars', 'Venus', 'Mercury'],
+      correctAnswer: 'Mars',
+    },
+    {
+      question: 'What is the largest planet in our solar system?',
+      answers: ['Saturn', 'Jupiter', 'Uranus'],
+      correctAnswer: 'Jupiter',
+    },
+  ];
+  
+
+const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [score, setScore] = useState({ positive: 0, negative: 0 });
+  const [timer, setTimer] = useState(10);
+  const [answerClicked, setAnswerClicked] = useState(false);
+
+  useEffect(() => {
+    let intervalId;
+
+    if (timer > 0) {
+      intervalId = setInterval(() => {
+        setTimer((prevTimer) => prevTimer - 1);
+      }, 1000);
+    } else {
+      clearInterval(intervalId);
+      if (!answerClicked) {
+        handleAnswerClick('');
+      }
+    }
+
+    return () => clearInterval(intervalId);
+  }, [timer, answerClicked]);
+
+  const handleAnswerClick = (selectedAnswer) => {
+    setAnswerClicked(true);
+
+    const currentQuestion = questions[currentQuestionIndex];
+    let updatedScore = { ...score };
+
+    if (selectedAnswer === currentQuestion.correctAnswer) {
+      updatedScore = { ...score, positive: score.positive + 1 };
+    } else if (selectedAnswer !== '') {
+      updatedScore = { ...score, negative: score.negative + 1 };
+    }
+
+    setScore(updatedScore);
+
+    setTimeout(() => {
+      if (currentQuestionIndex < questions.length - 1) {
+        setCurrentQuestionIndex(currentQuestionIndex + 1);
+        setTimer(10);
+        setAnswerClicked(false);
+      } else {
+        alert('Koniec quizu!');
+      }
+    }, 2000);
+  };
+
+  const currentQuestion = questions[currentQuestionIndex];
 
   return (
+    <>
     <View style={styles.quiz1}>
-      <Image style={styles.maskiDlaTa} contentFit="cover" source={require("../assets/maski-dla-ta4.png")} />
-      <View style={styles.kafelki}>
-        <Text style={styles.pytanie810}>Pytanie 8/10</Text>
-        <Text style={styles.jakNazywaSi}>Jak nazywa się najjaśniejsza gwiazda na nocnym niebie?</Text>
-      </View>
-      <Pressable style={styles.przyciskiWyboru}>
-        <Text style={styles.nastpnePytanie}>Następne pytanie</Text>
-      </Pressable>
-      <View style={styles.odpowiedzi}>
-        <Pressable style={styles.odpowiedz1}>
-          <Text style={styles.betelgeza}>Betelgeza</Text>
-        </Pressable>
-        <Pressable style={styles.odpowiedz2}>
-          <Text style={styles.syriusz}>Syriusz</Text>
-        </Pressable>
-        <Pressable style={styles.odpowiedz3}>
-          <Text style={styles.wega}>Wega</Text>
-        </Pressable>
-      </View>
-      <View style={styles.czas}>
-        <Image style={styles.czasChild} contentFit="cover" source={require("../assets/ellipse-5.png")} />
-        <Image style={styles.czasItem} contentFit="cover" source={require("../assets/ellipse-6.png")} />
-        <Image style={styles.czasInner} contentFit="cover" source={require("../assets/ellipse-7.png")} />
-        <Text style={styles.text}>23</Text>
-      </View>
-      <View style={styles.liczbaOdpowiedzi}>
-        <Text style={styles.text1}>04</Text>
-        <Text style={styles.text2}>03</Text>
-        <View style={styles.liczbaOdpowiedziChild} />
-        <View style={styles.liczbaOdpowiedziItem} />
-      </View>
-      
-      <TopNav_2 />
-      <BottomNav />
-    </View>);
+        <View style={styles.boxes}>
+          <View style={styles.liczbaOdpowiedzi}>
+            <Text style={styles.positive}>{score.positive}</Text>
+            <Text style={styles.time}>{timer}</Text>
+            <Text style={styles.negative}>{score.negative}</Text>
+          </View>  
+          <Text style={styles.question_count}>Pytanie {currentQuestionIndex + 1}/10</Text>
+          <Text style={styles.question}>{currentQuestion.question}</Text>
+          <View style={styles.odpowiedzi}>
+            {currentQuestion.answers.map((answer, index) => (
+                <TouchableOpacity
+                key={index}
+                style={[
+                  styles[`odpowiedz2`],
+                  answerClicked &&
+                    answer === currentQuestion.correctAnswer && {
+                      backgroundColor: 'green',
+                    },
+                  answerClicked &&
+                    answer !== currentQuestion.correctAnswer && {
+                      backgroundColor: 'red',
+                    },
+                ]}
+                onPress={() => handleAnswerClick(answer)}
+              >
+                <Text style={styles[`odpowiedzText1`]}>{answer}</Text>
+                </TouchableOpacity>
+              ))}
+          </View>
+        </View>   
+        <TouchableOpacity style={styles.next_button} onPress={() => handleAnswerClick('')}>
+            <Text style={styles.next_question_text}>Następne pytanie</Text>
+        </TouchableOpacity>          
+    </View>
+    </>
+  );
 };
 
 const styles = StyleSheet.create({
-  maskiDlaTa: {
-    position: "absolute",
-    height: "63.29%",
-    width: "100%",
-    top: "20.15%",
-    right: "0%",
-    bottom: "16.55%",
-    left: "0%",
-    maxWidth: "100%",
-    overflow: "hidden",
-    maxHeight: "100%",
-    opacity: 0.7
+  question: {
+    fontSize: 24,
+    textAlign: 'center',
   },
-  pytanie810: {
+  timer: {
+    fontSize: 20,
+  },
+  answersContainer: {
+    width: '100%',
+    alignItems: 'center',
+  },
+  answerButton: {
+    backgroundColor: 'lightblue',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 8,
+    marginVertical: 5,
+  },
+  answerText: {
+    fontSize: 18,
+  },
+  score: {
+    fontSize: 16,
+  },
+  question_count: {
     position: "relative",
     fontSize: FontSize.size_base,
     fontWeight: "500",
     fontFamily: FontFamily.montserratMedium,
     color: Color.secondary,
     textAlign: "left",
-    width: 101,
-    height: 24
+    marginTop: 20,
+    marginBottom: 10
   },
-  jakNazywaSi: {
+  question: {
     position: "relative",
     fontSize: FontSize.size_base,
     fontWeight: "600",
     fontFamily: FontFamily.montserratSemiBold,
     color: Color.text,
     textAlign: "left",
-    width: 233,
-    height: 47,
     marginTop: 9
   },
-  kafelki: {
-    position: "absolute",
-    height: "52.05%",
-    marginLeft: -140,
+  boxes: {
+    position: "relative",
     top: "25.51%",
-    bottom: "22.44%",
-    left: "50%",
+    left: "15%",
     borderRadius: Border.br_3xs,
     backgroundColor: Color.colorDarkslategray_100,
-    shadowColor: "rgba(0, 0, 0, 0.25)",
-    shadowOffset: {
-      width: 0,
-      height: 4
-    },
-    shadowRadius: 4,
-    elevation: 4,
-    shadowOpacity: 1,
-    width: 280,
+    width: "70%",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "flex-start",
-    paddingLeft: 24,
-    paddingTop: 76,
-    paddingRight: 23,
-    paddingBottom: 76
+    paddingLeft: 25,
+    paddingTop: 25,
+    paddingRight: 25,
+    paddingBottom: 25
   },
-  nastpnePytanie: {
+  next_question_text: {
     position: "relative",
     fontSize: FontSize.size_base,
     fontWeight: "600",
     fontFamily: FontFamily.montserratSemiBold,
     color: Color.text,
     textAlign: "center",
-    width: 155,
-    height: 15
   },
-  przyciskiWyboru: {
-    position: "absolute",
-    height: "5.64%",
-    width: "57.78%",
-    top: "80.26%",
-    right: "21.11%",
-    bottom: "14.1%",
-    left: "21.11%",
+  next_button: {
+    position: "relative",
+    width: "50%",
+    height: "5%",
     borderRadius: Border.br_3xs,
     backgroundColor: Color.colorGainsboro,
-    shadowColor: "rgba(0, 0, 0, 0.25)",
-    shadowOffset: {
-      width: 0,
-      height: 4
-    },
-    shadowRadius: 4,
-    elevation: 4,
-    shadowOpacity: 1,
     borderStyle: "solid",
     borderColor: Color.secondary,
     borderWidth: 2,
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "flex-start",
-    paddingHorizontal: 10,
-    paddingVertical: Padding.p_2xs
-  },
-  betelgeza: {
-    position: "relative",
-    fontSize: FontSize.size_base,
-    fontWeight: "500",
-    fontFamily: FontFamily.montserratMedium,
-    color: Color.colorGray_600,
-    textAlign: "center"
-  },
-  odpowiedz1: {
-    borderRadius: Border.br_mini,
-    backgroundColor: Color.colorDimgray_100,
-    borderStyle: "solid",
-    borderColor: Color.colorLightgray,
-    borderWidth: 2,
-    width: 244,
-    height: 52,
-    flexDirection: "column",
-    alignItems: "flex-start",
-    justifyContent: "flex-start",
-    paddingHorizontal: Padding.p_xl,
-    paddingVertical: Padding.p_xs
-  },
-  syriusz: {
-    position: "relative",
-    fontSize: FontSize.size_base,
-    fontWeight: "500",
-    fontFamily: FontFamily.montserratMedium,
-    color: Color.colorGray_600,
-    textAlign: "center"
+    marginLeft: "25%",
+    marginRight: "25%"
   },
   odpowiedz2: {
     borderRadius: Border.br_mini,
@@ -191,136 +243,40 @@ const styles = StyleSheet.create({
     paddingVertical: 0,
     marginTop: 24
   },
-  wega: {
-    position: "relative",
-    fontSize: FontSize.size_base,
-    fontWeight: "500",
-    fontFamily: FontFamily.montserratMedium,
-    color: Color.colorGray_600,
-    textAlign: "center"
-  },
-  odpowiedz3: {
-    borderRadius: Border.br_mini,
-    backgroundColor: Color.colorDimgray_100,
-    borderStyle: "solid",
-    borderColor: Color.secondary,
-    borderWidth: 2,
-    width: 244,
-    height: 52,
-    flexDirection: "column",
-    alignItems: "flex-start",
-    justifyContent: "flex-start",
-    paddingHorizontal: Padding.p_xl,
-    paddingVertical: 13,
-    marginTop: 24
-  },
   odpowiedzi: {
-    position: "absolute",
-    top: 379,
-    left: 60,
-    width: 241,
-    height: 192,
+    position: "relative",
     flexDirection: "column",
     alignItems: "flex-start",
     justifyContent: "flex-end",
     paddingRight: Padding.p_12xs
   },
-  czasChild: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    width: 67,
-    height: 67
+  liczbaOdpowiedzi: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center', // Wyśrodkowanie elementów w pionie
+    marginTop: 10,
   },
-  czasItem: {
-    position: "absolute",
-    top: 5,
-    left: 5,
-    width: 57,
-    height: 57
-  },
-  czasInner: {
-    position: "absolute",
-    top: 9,
-    left: 9,
-    width: 49,
-    height: 49
-  },
-  text: {
-    position: "absolute",
-    marginLeft: -12.5,
-    top: 20,
-    left: "50%",
+  time: {
+    fontSize: 16,
+    fontWeight: '700',
     fontSize: FontSize.size_xl,
-    fontWeight: "700",
     fontFamily: FontFamily.nav,
     color: Color.secondary,
-    textAlign: "left"
+    textAlign: 'center', // Wyśrodkowanie tekstu w poziomie
   },
-  czas: {
-    position: "absolute",
-    top: 186,
-    left: 147,
-    width: 67,
-    height: 67
+  positive: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: 'green', // Dopasuj kolor do swoich potrzeb
+    textAlign: 'left',
+    flex: 1, // Elastyczny element, aby umieścić "positive" na lewo
   },
-  text1: {
-    position: "absolute",
-    top: 0,
-    left: 229,
-    fontSize: FontSize.size_sm,
-    fontWeight: "700",
-    fontFamily: FontFamily.nav,
-    color: Color.colorFirebrick,
-    textAlign: "left"
-  },
-  text2: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    fontSize: FontSize.size_sm,
-    fontWeight: "700",
-    fontFamily: FontFamily.nav,
-    color: Color.primary,
-    textAlign: "left"
-  },
-  liczbaOdpowiedziChild: {
-    position: "absolute",
-    top: 5,
-    left: 29,
-    borderRadius: Border.br_mini,
-    backgroundColor: Color.primary,
-    width: 30,
-    height: 8
-  },
-  liczbaOdpowiedziItem: {
-    position: "absolute",
-    top: 5,
-    left: 181,
-    borderRadius: Border.br_mini,
-    backgroundColor: Color.colorFirebrick,
-    width: 36,
-    height: 8
-  },
-  liczbaOdpowiedzi: {
-    position: "absolute",
-    top: 218,
-    left: 58,
-    width: 249,
-    height: 17
-  },
-  quiz: {
-    position: "absolute",
-    marginLeft: -195,
-    top: 123,
-    left: "50%",
-    fontSize: FontSize.size_13xl,
-    fontWeight: "800",
-    fontFamily: FontFamily.montserratExtraBold,
-    color: Color.text,
-    textAlign: "center",
-    width: 389,
-    height: 73
+  negative: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: 'red', // Dopasuj kolor do swoich potrzeb
+    textAlign: 'right',
+    flex: 1, // Elastyczny element, aby umieścić "negative" na prawo
   },
   quiz1: {
     position: "relative",
