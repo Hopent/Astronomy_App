@@ -16,7 +16,7 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const apiKey = '61bc7efa138d4ae592e29dd27dccb23e';
+        const apiKey = '61bc7efa138d4ae592e29dd27dccb23ee'; //delete last 'e' for a correct api_key
         const lat = '50.886';
         const long = '20.641';
         const apiUrl = `https://api.ipgeolocation.io/astronomy?apiKey=${apiKey}&lat=${lat}&long=${long}`;
