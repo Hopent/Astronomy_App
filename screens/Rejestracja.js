@@ -1,16 +1,18 @@
 import * as React from "react";
 import { useState } from "react";
-import { Text, StyleSheet, Pressable, View, TextInput, Linking } from "react-native";
+import { Text, StyleSheet, Pressable, View, TextInput, Linking, Alert } from "react-native";
 import { Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { FontSize, FontFamily, Color, Border, Padding } from "../GlobalStyles";
+
+
 
 const Rejestracja = () => {
   const navigation = useNavigation();
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
-  
+
   const handleRegister = () => {
     if (password == password2) {
       navigation.navigate("Logowanie");

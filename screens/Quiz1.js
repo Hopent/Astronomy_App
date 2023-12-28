@@ -63,6 +63,7 @@ const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState({ positive: 0, negative: 0 });
   const [timer, setTimer] = useState(10);
   const [answerClicked, setAnswerClicked] = useState(false);
+  const [answeredCurrentQuestion, setAnsweredCurrentQuestion] = useState(false);
 
   useEffect(() => {
     let intervalId;
@@ -82,28 +83,32 @@ const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   }, [timer, answerClicked]);
 
   const handleAnswerClick = (selectedAnswer) => {
-    setAnswerClicked(true);
+    if (!answeredCurrentQuestion) { 
+      setAnsweredCurrentQuestion(true);
+      setAnswerClicked(true);
 
-    const currentQuestion = questions[currentQuestionIndex];
-    let updatedScore = { ...score };
+      const currentQuestion = questions[currentQuestionIndex];
+      let updatedScore = { ...score };
 
-    if (selectedAnswer === currentQuestion.correctAnswer) {
-      updatedScore = { ...score, positive: score.positive + 1 };
-    } else if (selectedAnswer !== '') {
-      updatedScore = { ...score, negative: score.negative + 1 };
-    }
-
-    setScore(updatedScore);
-
-    setTimeout(() => {
-      if (currentQuestionIndex < questions.length - 1) {
-        setCurrentQuestionIndex(currentQuestionIndex + 1);
-        setTimer(10);
-        setAnswerClicked(false);
+      if (selectedAnswer === currentQuestion.correctAnswer) {
+        updatedScore = { ...score, positive: score.positive + 1 };
       } else {
-        alert('Koniec quizu!');
+        updatedScore = { ...score, negative: score.negative + 1 };
       }
-    }, 2000);
+
+      setScore(updatedScore);
+
+      setTimeout(() => {
+        if (currentQuestionIndex < questions.length - 1) {
+          setCurrentQuestionIndex(currentQuestionIndex + 1);
+          setTimer(10);
+          setAnswerClicked(false);
+          setAnsweredCurrentQuestion(false);
+        } else {
+          alert('Koniec quizu!');
+        }
+      }, 2000);
+   }
   };
 
   const currentQuestion = questions[currentQuestionIndex];
@@ -136,20 +141,27 @@ const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
                 ]}
                 onPress={() => handleAnswerClick(answer)}
               >
-                <Text style={styles[`odpowiedzText1`]}>{answer}</Text>
+                <Text>{answer}</Text>
                 </TouchableOpacity>
               ))}
           </View>
         </View>   
         <TouchableOpacity style={styles.next_button} onPress={() => handleAnswerClick('')}>
-            <Text style={styles.next_question_text}>Następne pytanie</Text>
-        </TouchableOpacity>          
+            <Text style={styles.next_question_text}>Następne pytaniee</Text>
+        </TouchableOpacity>
     </View>
+    <TopNav_2 />
+    <BottomNav />
     </>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   question: {
     fontSize: 24,
     textAlign: 'center',
@@ -195,7 +207,7 @@ const styles = StyleSheet.create({
   },
   boxes: {
     position: "relative",
-    top: "25.51%",
+    top: "15%",
     left: "15%",
     borderRadius: Border.br_3xs,
     backgroundColor: Color.colorDarkslategray_100,
@@ -226,7 +238,9 @@ const styles = StyleSheet.create({
     borderColor: Color.secondary,
     borderWidth: 2,
     marginLeft: "25%",
-    marginRight: "25%"
+    marginRight: "25%",
+    justifyContent: 'center',
+    top: 150
   },
   odpowiedz2: {
     borderRadius: Border.br_mini,

@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, Pressable } from "react-native";
 import { Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -8,6 +8,33 @@ import TopNav_2 from "../components/TopNav_2";
 
 const Home = () => {
   const navigation = useNavigation();
+
+  const [astronomyData, setAstronomyData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [moonInfo, setMoonInfo] = useState('');
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const apiKey = '61bc7efa138d4ae592e29dd27dccb23e';
+        const lat = '50.886';
+        const long = '20.641';
+        const apiUrl = `https://api.ipgeolocation.io/astronomy?apiKey=${apiKey}&lat=${lat}&long=${long}`;
+
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+
+        setAstronomyData(data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
 
   return (
     <View style={styles.home1}>
@@ -19,11 +46,16 @@ const Home = () => {
             contentFit="cover"
             source={require("../assets/giphy-32.png")}
           />
-          <Text style={styles.zanikajcy735Widocznoci}>{`Zanikający
-            7.35% widoczności
-            399247.71 km od Ziemi
-            Wiek wynosi 27 dni
-          `}</Text>
+          {loading ? (
+            <Text>Loading...</Text>
+            ) : (
+              <View style={styles.ksiezyc}>
+                    <Text>Date: {astronomyData && astronomyData.date}</Text>
+                    <Text>Time: {astronomyData && astronomyData.current_time}</Text>
+                    <Text>Moon Distance: {astronomyData && parseFloat(astronomyData.moon_distance).toFixed(2)} KM</Text>
+                    <Text>Moon Altitude: {astronomyData && parseFloat(astronomyData.moon_altitude).toFixed(2)} KM</Text>
+                  </View>
+            )}
           <Text style={styles.fazaKsiyca}>Faza księżyca</Text>
         </View>
         <View style={styles.ranking}>
@@ -38,13 +70,15 @@ const Home = () => {
             contentFit="cover"
             source={require("../assets/sign-out-squre-fill1.png")}
           />
-          <Text style={styles.punktw200Punktw}>{`220 punktów
+          <Text style={styles.punktw200Punktw}>{`
+          220 punktów
           200 punktów
           180 punktów
           170 punktów
           165 punktów
           `}</Text>
-          <Text style={styles.pokerGabriel12Maxas}>{`Poker
+          <Text style={styles.pokerGabriel12Maxas}>{`
+          Poker
           Gabriel12
           maxas
           Monik

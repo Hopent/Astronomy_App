@@ -99,7 +99,7 @@ const Kompas = () => {
 const styles = StyleSheet.create({
   heading: {
     position: "absolute",
-    top: 190, // Adjust this value as needed to position the heading text
+    top: 190,
     left: 0,
     right: 0,
     fontSize: 20,
