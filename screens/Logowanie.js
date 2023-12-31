@@ -1,9 +1,9 @@
-import * as React from "react";
-import { useState } from "react";
-import { Image } from "react-native";
-import { StyleSheet, Pressable, Text, View, TextInput } from "react-native";
+import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { FontSize, FontFamily, Color, Border, Padding } from "../GlobalStyles";
+import { StyleSheet, Pressable, Text, View, Image, TextInput, Dimensions, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Platform } from "react-native";
+import { FontSize, FontFamily, Color, Border } from "../GlobalStyles";
+
+const { width, height } = Dimensions.get("window");
 
 const Logowanie = () => {
   const navigation = useNavigation();
@@ -11,180 +11,208 @@ const Logowanie = () => {
   const [password, setPassword] = useState("");
 
   const handleLogin = () => {
-    if (login == password) {
+    if (login === password) {
       navigation.navigate("Home");
     } else {
       alert("Zły login lub hasło.");
     }
   };
+
   return (
-    <View style={styles.logowanie}>
-      <Pressable
-        style={styles.zamknij}
-        onPress={() => navigation.navigate("EkranPowitalny")}
-      >
-        <Image
-          style={styles.icon}
-          contentFit="cover"
-          source={require("../assets/zamknij.png")}
-        />
-      </Pressable>
-      <View style={styles.frame2}>
-        <View style={styles.przyciskiWyboru}>
-          <View style={styles.zalogujSi1}>
-            <Text style={styles.zalogujSi}>Zaloguj się</Text>
-          </View>
-          <Pressable
-            style={styles.rejestracja1}
-            onPress={() => navigation.navigate("Rejestracja")}
-          >
-            <Text style={styles.rejestracja}>Rejestracja</Text>
-          </Pressable>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 64 : height*-0.3}
+      style={{ flex: 1 }}
+    >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={styles.container}>
+        <View style={styles.frame1}>
+          <Image
+            style={styles.frameIcon1}
+            contentFit="cover"
+            source={require("../assets/frame1.png")}
+          />  
         </View>
         <Pressable
-          style={styles.przycisk}
-          onPress={handleLogin}
-
+          style={styles.closeButton}
+          onPress={() => navigation.navigate("EkranPowitalny")}
         >
-          <View style={styles.rectangle} />
-          <Text style={styles.zalogujSi2}>Zaloguj się</Text>
+          <Image
+            style={styles.icon}
+            resizeMode="contain"
+            source={require("../assets/zamknij.png")}
+          />
         </Pressable>
-        <Text style={styles.zalogujSi3}>Zaloguj się</Text>
-        <View style={styles.panelLogowania}>
-          <View style={styles.loginParent}>
-            <Text style={styles.haso}>Login</Text>
-            <View style={styles.frame}>
+        <Text style={styles.header}>Zaloguj się</Text>
+        <View style={styles.content}>
+          <View style={styles.selectionButtons}>
+            <Pressable
+              style={[styles.button, styles.loginButton]}
+              onPress={() => {}}
+            >
+              <Text style={styles.buttonText}>Zaloguj się</Text>
+            </Pressable>
+            <Pressable
+              style={[styles.button, styles.registerButton]}
+              onPress={() => navigation.navigate("Rejestracja")}
+            >
+              <Text style={[styles.buttonText, { color: "#5f5f5f" }]}>Rejestracja</Text>
+            </Pressable>
+          </View>
+          <View style={styles.loginPanel}>
+            <View style={styles.inputGroup}>
+              <Text style={styles.label}>Login</Text>
               <TextInput
-              placeholder="Wprowadz login"
-              className="rectangle1"
-              onChangeText={(text) => setLogin(text)}
-              style={styles.rectangle1} />
+                placeholder="Wprowadź swój login"
+                placeholderTextColor="#777777"
+                onChangeText={(text) => setLogin(text)}
+                style={styles.input}
+              />
+            </View>
+            <View style={styles.inputGroup}>
+              <Text style={styles.label}>Hasło</Text>
+              <TextInput
+                secureTextEntry={true}
+                placeholder="Wprowadź swoje hasło"
+                placeholderTextColor="#777777"
+                onChangeText={(text) => setPassword(text)}
+                style={styles.input}
+              />
             </View>
           </View>
-          <View style={styles.hasoParent}>
-            <Text style={styles.login}>Hasło</Text>
-            <View style={styles.frame}>
-              <TextInput
-              secureTextEntry={true}
-              placeholder="Wprowadz haslo"
-              onChangeText={(text) => setPassword(text)}
-              style={styles.rectangle1} />
-            </View>
-          </View>
+          <Pressable
+            style={styles.loginButtonLarge}
+            onPress={handleLogin}
+          >
+            <Text style={styles.loginTextLarge}>Zaloguj się</Text>
+          </Pressable>
         </View>
-      </View>
-    </View>
+        <View style={styles.frame4}>
+          <Image
+            style={styles.frameIcon2}
+            contentFit="cover"
+            source={require("../assets/Maska_z_cieniem.png")}
+          />
+        </View>
+        </View>
+        </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
-  icon: {
-    height: "100%",
-    width: "100%",
-    maxWidth: "100%",
+  container: {
+    borderRadius: Border.br_21xl,
+    backgroundColor: Color.colorGray_500,
+    flex: 1,
+    width: width,
     overflow: "hidden",
-    maxHeight: "100%",
+    zIndex: 0,
   },
-  zamknij: {
-    left: "8.61%",
-    top: "7.69%",
-    right: "84.72%",
-    bottom: "89.23%",
-    width: "6.67%",
-    height: "3.08%",
+  frameIcon1: {
+    position: 'absolute',
+    top: "0%",
+    width: width,
+    height: height,
+    alignItems: "center",
   },
-  zalogujSi: {
-    position: "relative",
+  frame4: {
+    width: width,
+  },
+  frameIcon2: {
+    position: 'absolute',
+    bottom: "0%",
+    width: width,
+    height: height,
+    alignItems: "center",
+    transform: [{ translateY: height * 0.45 }]
+  },
+  closeButton: {
+    position: 'absolute',
+    top: height * 0.0769,
+    left: width * 0.0861,
+    width: width * 0.0667,
+    height: height * 0.0308,
+    zIndex: 2,
+  },
+  content: {
+    flex: 1,
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    width: width,
+    padding: 20,
+    paddingTop: 20,
+  },
+  selectionButtons: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: width*0.7, 
+    marginTop: height*-0.1,
+    marginBottom: height*0.1,
+  },
+  button: {
+    borderRadius: Border.br_3xs,
+    borderWidth: 2,
+    borderColor: Color.secondary,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+  },
+  loginButton: {
+    backgroundColor: Color.colorGainsboro,
+  },
+  registerButton: {
+    backgroundColor: Color.colorGainsboro,
+  },
+  buttonText: {
     fontSize: FontSize.size_xs,
-    fontWeight: "700",
     fontFamily: FontFamily.nav,
     color: Color.text,
     textAlign: "center",
-    width: 80,
-    height: 15,
   },
-  zalogujSi1: {
-    borderRadius: Border.br_3xs,
-    backgroundColor: Color.colorGainsboro,
-    borderStyle: "solid",
-    borderColor: Color.secondary,
-    borderWidth: 2,
-    width: 100,
-    height: 29,
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
+  header: {
+    fontSize: FontSize.size_17xl,
+    fontFamily: FontFamily.montserratExtraBold,
+    color: Color.text,
+    textAlign: "center",
+    marginTop: "30%",
+    marginBottom: "10%",
   },
-  rejestracja: {
-    position: "relative",
+  loginPanel: {
+    width: width*0.8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: '-40%',
+    marginBottom: "5%",
+    maxHeight: '20%',
+  },
+  inputGroup: {
+    width: '100%',
+    marginBottom: 10,
+    marginTop: "5%",
+    zIndex: 1,
+  },
+  label: {
     fontSize: FontSize.size_xs,
-    fontWeight: "700",
-    fontFamily: FontFamily.nav,
-    color: Color.colorDimgray_100,
-    textAlign: "center",
-    width: 80,
-    height: 15,
+    fontFamily: FontFamily.montserratRegular,
+    color: Color.colorDarkgray_100,
+    marginBottom: 5,
+    marginLeft: 22,
   },
-  rejestracja1: {
-    borderRadius: Border.br_3xs,
-    backgroundColor: Color.colorGainsboro,
-    borderStyle: "solid",
-    borderColor: Color.secondary,
-    borderWidth: 2,
-    width: 100,
-    height: 29,
-    flexDirection: "column",
-    alignItems: "flex-end",
-    justifyContent: "center",
-    paddingHorizontal: Padding.p_4xs,
-    paddingVertical: 0,
+  input: {
+    borderRadius: Border.br_xs,
+    backgroundColor: Color.colorGray_300,
+    color: Color.text,
+    height: 54,
+    width: '100%',
+    paddingHorizontal: 25,
   },
-  przyciskiWyboru: {
-    position: "absolute",
-    top: 112,
-    left: 223,
-    width: 254,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  rectangle: {
-    position: "absolute",
-    height: "100%",
-    width: "100%",
-    top: "0%",
-    right: "0%",
-    bottom: "0%",
-    left: "0%",
-    borderRadius: Border.br_base,
+  loginButtonLarge: {
     backgroundColor: Color.secondary,
-    shadowColor: "rgba(255, 203, 116, 0.2)",
-    shadowOffset: {
-      width: 0,
-      height: 20,
-    },
-    shadowRadius: 60,
-    elevation: 60,
-    shadowOpacity: 1,
-  },
-  zalogujSi2: {
-    position: "absolute",
-    top: "29.63%",
-    left: "23.89%",
-    fontSize: FontSize.size_base,
-    letterSpacing: 0.4,
-    fontWeight: "600",
-    fontFamily: FontFamily.montserratSemiBold,
-    color: Color.colorGray_100,
-    textAlign: "center",
-  },
-  przycisk: {
-    position: "absolute",
-    height: "8.17%",
-    marginLeft: -90.45,
-    top: "65.36%",
-    bottom: "26.48%",
-    left: "50%",
+    borderRadius: Border.br_base,
+    padding: 16,
+    width: '55%',
+    alignItems: 'center',
+    justifyContent: 'center',
     shadowColor: "rgba(0, 0, 0, 0.25)",
     shadowOffset: {
       width: 0,
@@ -193,107 +221,17 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 4,
     shadowOpacity: 1,
-    width: 180,
+    zIndex: 1,
   },
-  zalogujSi3: {
-    position: "absolute",
-    marginTop: -330.5,
-    marginLeft: -195.45,
-    top: "50%",
-    left: "50%",
-    fontSize: FontSize.size_17xl,
-    fontWeight: "800",
-    fontFamily: FontFamily.montserratExtraBold,
-    color: Color.text,
+  loginTextLarge: {
+    fontSize: FontSize.size_base,
+    fontFamily: FontFamily.montserratSemiBold,
+    color: Color.colorGray_100,
     textAlign: "center",
-    width: 389,
-    height: 73,
   },
-  haso: {
-    position: "absolute",
-    top: 0,
-    left: 24,
-    fontSize: FontSize.size_xs,
-    letterSpacing: 0.3,
-    fontFamily: FontFamily.montserratRegular,
-    color: Color.colorDarkgray_100,
-    textAlign: "left",
-  },
-  rectangle1: {
-    paddingLeft: 10,
-    flex: 1,
-    position: "relative",
-    borderRadius: Border.br_xs,
-    backgroundColor: Color.colorGray_300,
-    height: 54,
-  },
-  frame: {
-    position: "absolute",
-    top: 19,
-    left: 0,
-    width: 300,
-    overflow: "hidden",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-end",
-  },
-  hasoParent: {
-    position: "absolute",
-    top: 99,
-    left: 0,
-    width: 300,
-    height: 73,
-  },
-  login: {
-    position: "absolute",
-    top: 0,
-    left: 24,
-    fontSize: FontSize.size_xs,
-    letterSpacing: 0.3,
-    fontFamily: FontFamily.montserratRegular,
-    color: Color.colorDarkgray_100,
-    textAlign: "left",
-  },
-  frame1: {
-    position: "absolute",
-    top: 19,
-    left: 0,
-    width: 300,
-    overflow: "hidden",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-end",
-  },
-  loginParent: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    width: 300,
-    height: 73,
-  },
-  panelLogowania: {
-    position: "absolute",
-    top: 181,
-    left: 200,
-    width: 300,
-    height: 201,
-  },
-  frame2: {
-    position: "absolute",
-    top: 160,
-    left: -140,
-    width: 701,
-    height: 661,
-    overflow: "hidden",
-  },
-  logowanie: {
-    position: "absolute",
-    borderRadius: Border.br_21xl,
-    backgroundColor: Color.colorGray_500,
-    flex: 1,
-    width: "100%",
-    height: 880,
-    overflow: "hidden",
+  icon: {
+    width: '100%',
+    height: '100%',
   },
 });
 

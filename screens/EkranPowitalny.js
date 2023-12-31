@@ -104,7 +104,6 @@ const styles = StyleSheet.create({
 
   galacticAtlas: {
     fontSize: FontSize.size_17xl,
-    fontWeight: "800",
     fontFamily: FontFamily.montserratExtraBold,
     color: Color.text,
     textAlign: "center",
