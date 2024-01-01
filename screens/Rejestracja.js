@@ -1,18 +1,16 @@
-import * as React from "react";
-import { useState } from "react";
-import { Text, StyleSheet, Pressable, View, TextInput, Linking, Alert } from "react-native";
-import { Image } from "react-native";
+import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { FontSize, FontFamily, Color, Border, Padding } from "../GlobalStyles";
+import { StyleSheet, Pressable, Text, View, Image, TextInput, Dimensions, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Platform, Linking } from "react-native";
+import { FontSize, FontFamily, Color, Border } from "../GlobalStyles";
 
-
+const { width, height } = Dimensions.get("window");
 
 const Rejestracja = () => {
   const navigation = useNavigation();
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
-
+  
   const handleRegister = () => {
     if (password == password2) {
       navigation.navigate("Logowanie");
@@ -20,209 +18,242 @@ const Rejestracja = () => {
       alert("Hasła nie są takie same. Proszę wprowadzić poprawne hasło.");
     }
   };
-  
+
   const handlePrivacyPolicyPress = () => {
-    const privacyPolicyURL = "https://www.lipsum.com/"; // Twój docelowy URL
+    const privacyPolicyURL = "https://www.lipsum.com/"; 
     Linking.openURL(privacyPolicyURL);
   };
 
   return (
-    <View style={styles.rejestracja3}>
-      <Text style={styles.politykPrywatnoci} onPress={handlePrivacyPolicyPress}>
-        Polityką prywatności
-      </Text>
-      
-      <Text
-        style={styles.klikajcWPoniszy}
-      >{`Klikając w poniższy przycisk zgadzasz się z naszą `}</Text>
-      <View style={styles.przyciskiWyboru}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 64 : height*-0.24}
+      style={{ flex: 1 }}
+    >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={styles.container}>
+        <View style={styles.frame1}>
+          <Image
+            style={styles.frameIcon1}
+            contentFit="cover"
+            source={require("../assets/frame1.png")}
+          />  
+        </View>
         <Pressable
-          style={styles.zalogujSi1}
-          onPress={() => navigation.navigate("Logowanie")}
+          style={styles.closeButton}
+          onPress={() => navigation.navigate("EkranPowitalny")}
         >
-          <Text style={styles.zalogujSi}>Zaloguj się</Text>
+          <Image
+            style={styles.icon}
+            resizeMode="contain"
+            source={require("../assets/zamknij.png")}
+          />
         </Pressable>
-        <View style={styles.rejestracja1}>
-          <Text style={styles.rejestracja}>Rejestracja</Text>
+        <Text style={styles.header}>Rejestracja</Text>
+        <View style={styles.content}>
+          <View style={styles.selectionButtons}>
+            <Pressable
+              style={[styles.button, styles.loginButton]}
+              onPress={() => navigation.navigate("Logowanie")}
+            >
+              <Text style={[styles.buttonText, { color: "#5f5f5f" }]}>Zaloguj się</Text>
+            </Pressable>
+            <Pressable
+              style={[styles.button, styles.registerButton]}
+              onPress={() => {}}
+            >
+              <Text style={styles.buttonText}>Rejestracja</Text>
+            </Pressable>
+          </View>
+          <View style={styles.loginPanel}>
+            <View style={styles.inputGroup}>
+              <Text style={styles.label}>Login</Text>
+              <TextInput
+                placeholder="Wprowadź swój login"
+                placeholderTextColor="#777777"
+                onChangeText={(text) => setLogin(text)}
+                style={styles.input}
+              />
+            </View>
+            <View style={styles.inputGroup}>
+              <Text style={styles.label}>Hasło</Text>
+              <TextInput
+                secureTextEntry={true}
+                placeholder="Wprowadź swoje hasło"
+                placeholderTextColor="#777777"
+                onChangeText={(text) => setPassword(text)}
+                style={styles.input}
+              />
+            </View>
+            <View style={styles.inputGroup}>
+              <Text style={styles.label}>Potwierdź hasło</Text>
+              <TextInput
+                secureTextEntry={true}
+                placeholder="Wprowadź ponownie swoje hasło"
+                placeholderTextColor="#777777"
+                onChangeText={(text) => setPassword2(text)}
+                style={styles.input}
+              />
+            </View>
+            <View style={styles.frame5}>
+            <Text
+            style={styles.klikajcWPoniszy}
+            >{`Klikając w poniższy przycisk zgadzasz się z naszą `}</Text>
+            <Text style={styles.politykPrywatnoci} onPress={handlePrivacyPolicyPress}>Polityką prywatności</Text>
+            </View>
+          </View>
+          <Pressable
+            style={styles.loginButtonLarge}
+            onPress={handleRegister}
+          >
+            <Text style={styles.loginTextLarge}>Zarejestruj się</Text>
+          </Pressable>
         </View>
-      </View>
-      <Text style={styles.rejestracja2}>Rejestracja</Text>
-      <Pressable
-        style={styles.przycisk}
-        onPress={handleRegister}
-      >
-        <View style={styles.rectangle} />
-        <Text style={styles.zalogujSi2}>Zarejestruj się</Text>
-      </Pressable>
-      <View style={styles.panelLogowania}>
-        <View style={styles.loginParent}>
-          <Text style={styles.login}>Login</Text>
-          <TextInput
-              placeholder="Wprowadz login"
-              className="rectangle1"
-              onChangeText={(text) => setLogin(text)}
-              style={styles.rectangle1} />
+        <View style={styles.frame4}>
+          <Image
+            style={styles.frameIcon2}
+            contentFit="cover"
+            source={require("../assets/Maska_z_cieniem.png")}
+          />
         </View>
-        <View style={styles.hasoParent}>
-          <Text style={styles.haso}>Hasło</Text>
-          <TextInput
-              secureTextEntry={true}
-              placeholder="Wprowadz hasło"
-              className="rectangle1"
-              onChangeText={(text) => setPassword(text)}
-              style={styles.rectangle1} />
         </View>
-        <View style={styles.potwierdHasoParent}>
-          <Text style={styles.potwierdHaso}>Potwierdź hasło</Text>
-          <TextInput
-              secureTextEntry={true}
-              placeholder="Potwierdź hasło"
-              className="rectangle1"
-              onChangeText={(text) => setPassword2(text)}
-              style={styles.rectangle1} />
-        </View>
-      </View>
-      <Pressable
-        style={styles.zamknij}
-        onPress={() => navigation.navigate("EkranPowitalny")}
-      >
-        <Image
-          style={styles.icon}
-          contentFit="cover"
-          source={require("../assets/zamknij.png")}
-        />
-      </Pressable>
-    </View>
+        </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
   politykPrywatnoci: {
-    position: "absolute",
-    marginLeft: -66,
-    top: "78.59%",
-    left: "50%",
-    fontSize: FontSize.size_xs,
+    fontSize: FontSize.nav_size,
     letterSpacing: 0.3,
     fontFamily: FontFamily.montserratRegular,
     color: Color.secondary,
-    textAlign: "left",
+    textAlign: "center",
+    marginBottom: height*0.03, 
+    zIndex: 3,
   },
   klikajcWPoniszy: {
-    position: "absolute",
-    top: "76.67%",
-    left: 60,
-    fontSize: FontSize.size_xs,
+    fontSize: FontSize.nav_size,
     letterSpacing: 0.3,
     fontFamily: FontFamily.montserratRegular,
     color: Color.colorDarkgray_100,
     textAlign: "left",
   },
-  zalogujSi: {
-    position: "relative",
-    fontSize: FontSize.size_xs,
-    fontWeight: "700",
-    fontFamily: FontFamily.nav,
-    color: Color.colorDimgray_100,
-    textAlign: "center",
-    width: 80,
-    height: 15,
-  },
-  zalogujSi1: {
+  container: {
+    borderRadius: Border.br_21xl,
+    backgroundColor: Color.colorGray_500,
     flex: 1,
-    borderRadius: Border.br_3xs,
-    backgroundColor: Color.colorGainsboro,
-    borderStyle: "solid",
-    borderColor: Color.secondary,
-    borderWidth: 2,
-    height: 29,
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
+    width: width,
+    overflow: "hidden",
+    zIndex: 0,
   },
-  rejestracja: {
-    position: "relative",
+  frameIcon1: {
+    position: 'absolute',
+    top: "0%",
+    width: width,
+    height: height,
+    alignItems: "center",
+  },
+  frame4: {
+    width: width,
+  },
+  frame5: {
+    marginTop: height*0.01,
+  },
+  frameIcon2: {
+    position: 'absolute',
+    bottom: "0%",
+    width: width,
+    height: height,
+    alignItems: "center",
+    transform: [{ translateY: height * 0.45 }]
+  },
+  closeButton: {
+    position: 'absolute',
+    top: height * 0.0769,
+    left: width * 0.0861,
+    width: width * 0.0667,
+    height: height * 0.0308,
+    zIndex: 2,
+  },
+  content: {
+    flex: 1,
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    width: width,
+    padding: 20,
+    paddingTop: 20,
+  },
+  selectionButtons: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: width*0.7, 
+    marginTop: height*-0.13,
+    marginBottom: height*0.05,
+  },
+  button: {
+    borderRadius: Border.br_3xs,
+    borderWidth: 2,
+    borderColor: Color.secondary,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+  },
+  loginButton: {
+    backgroundColor: Color.colorGainsboro,
+  },
+  registerButton: {
+    backgroundColor: Color.colorGainsboro,
+  },
+  buttonText: {
     fontSize: FontSize.size_xs,
-    fontWeight: "700",
     fontFamily: FontFamily.nav,
     color: Color.text,
     textAlign: "center",
-    width: 80,
-    height: 15,
   },
-  rejestracja1: {
-    flex: 1,
-    borderRadius: Border.br_3xs,
-    backgroundColor: Color.colorGainsboro,
-    borderStyle: "solid",
-    borderColor: Color.secondary,
-    borderWidth: 2,
-    height: 29,
-    flexDirection: "column",
-    alignItems: "flex-end",
-    justifyContent: "center",
-    paddingHorizontal: Padding.p_4xs,
-    paddingVertical: 0,
-    marginLeft: 54,
-  },
-  przyciskiWyboru: {
-    position: "absolute",
-    top: 255,
-    left: 90,
-    width: 254,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-start",
-  },
-  rejestracja2: {
-    position: "absolute",
-    marginTop: -290,
-    marginLeft: -195,
-    top: "50%",
-    left: "50%",
+  header: {
     fontSize: FontSize.size_17xl,
-    fontWeight: "800",
     fontFamily: FontFamily.montserratExtraBold,
     color: Color.text,
     textAlign: "center",
-    width: 389,
-    height: 73,
+    marginTop: "30%",
+    marginBottom: "10%",
   },
-  rectangle: {
-    position: "absolute",
-    height: "100%",
-    width: "100%",
-    top: "0%",
-    right: "0%",
-    bottom: "0%",
-    left: "0%",
-    borderRadius: Border.br_base,
+  loginPanel: {
+    width: width*0.8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: '-5%',
+    marginBottom: "5%",
+    maxHeight: '20%',
+  },
+  inputGroup: {
+    width: '100%',
+    marginBottom: 10,
+    marginTop: "5%",
+    zIndex: 1,
+  },
+  label: {
+    fontSize: FontSize.size_xs,
+    fontFamily: FontFamily.montserratRegular,
+    color: Color.colorDarkgray_100,
+    marginBottom: 5,
+    marginLeft: 22,
+  },
+  input: {
+    borderRadius: Border.br_xs,
+    backgroundColor: Color.colorGray_300,
+    color: Color.text,
+    height: 54,
+    width: '100%',
+    paddingHorizontal: 25,
+  },
+  loginButtonLarge: {
     backgroundColor: Color.secondary,
-    shadowColor: "rgba(255, 203, 116, 0.2)",
-    shadowOffset: {
-      width: 0,
-      height: 20,
-    },
-    shadowRadius: 60,
-    elevation: 60,
-    shadowOpacity: 1,
-  },
-  zalogujSi2: {
-    position: "absolute",
-    top: "29.63%",
-    left: "16.11%",
-    fontSize: FontSize.size_base,
-    letterSpacing: 0.4,
-    fontWeight: "600",
-    fontFamily: FontFamily.montserratSemiBold,
-    color: Color.colorGray_100,
-    textAlign: "center",
-  },
-  przycisk: {
-    position: "absolute",
-    marginLeft: -90,
-    top: 600,
-    left: "50%",
+    borderRadius: Border.br_base,
+    padding: 16,
+    width: '55%',
+    alignItems: 'center',
+    justifyContent: 'center',
     shadowColor: "rgba(0, 0, 0, 0.25)",
     shadowOffset: {
       width: 0,
@@ -231,115 +262,18 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 4,
     shadowOpacity: 1,
-    width: 180,
-    height: 54,
+    marginTop: "-10%",
+    zIndex: 1,
   },
-  login: {
-    position: "absolute",
-    top: 0,
-    left: 24,
-    fontSize: FontSize.size_xs,
-    letterSpacing: 0.3,
-    fontFamily: FontFamily.montserratRegular,
-    color: Color.colorDarkgray_100,
-    textAlign: "left",
-  },
-  rectangle1: {
-    paddingLeft: 10,
-    position: "absolute",
-    height: "73.97%",
-    top: "26.03%",
-    bottom: "0%",
-    left: 0,
-    borderRadius: Border.br_xs,
-    backgroundColor: Color.colorGray_300,
-    width: 300,
-  },
-  loginParent: {
-    alignSelf: "stretch",
-    position: "relative",
-    height: 73,
-  },
-  haso: {
-    position: "absolute",
-    top: 0,
-    left: 24,
-    fontSize: FontSize.size_xs,
-    letterSpacing: 0.3,
-    fontFamily: FontFamily.montserratRegular,
-    color: Color.colorDarkgray_100,
-    textAlign: "left",
-  },
-  rectangle2: {
-    position: "absolute",
-    height: "73.97%",
-    top: "26.03%",
-    bottom: "0%",
-    left: 0,
-    borderRadius: Border.br_xs,
-    backgroundColor: Color.colorGray_300,
-    width: 300,
-  },
-  hasoParent: {
-    alignSelf: "stretch",
-    position: "relative",
-    height: 73,
-    marginTop: 26,
-  },
-  potwierdHaso: {
-    position: "absolute",
-    top: 0,
-    left: 24,
-    fontSize: FontSize.size_xs,
-    letterSpacing: 0.3,
-    fontFamily: FontFamily.montserratRegular,
-    color: Color.colorDarkgray_100,
-    textAlign: "left",
-  },
-  rectangle3: {
-    position: "absolute",
-    height: "73.97%",
-    top: "26.03%",
-    bottom: "0%",
-    left: 0,
-    borderRadius: Border.br_xs,
-    backgroundColor: Color.colorGray_300,
-    width: 300,
-  },
-  potwierdHasoParent: {
-    alignSelf: "stretch",
-    position: "relative",
-    height: 73,
-    marginTop: 26,
-  },
-  panelLogowania: {
-    position: "absolute",
-    top: 300,
-    left: 60,
-    width: 300,
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "flex-start",
+  loginTextLarge: {
+    fontSize: FontSize.size_base,
+    fontFamily: FontFamily.montserratSemiBold,
+    color: Color.colorGray_100,
+    textAlign: "center",
   },
   icon: {
-    width: "100%",
-    height: "100%",
-  },
-  zamknij: {
-    position: "absolute",
-    left: 31,
-    top: 60,
-    width: 24,
-    height: 24,
-  },
-  rejestracja3: {
-    position: "absolute",
-    borderRadius: Border.br_21xl,
-    backgroundColor: Color.colorGray_500,
-    flex: 1,
-    width: "100%",
-    height: 880,
-    overflow: "hidden",
+    width: '100%',
+    height: '100%',
   },
 });
 

@@ -147,8 +147,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     width: width*0.7, 
-    marginTop: height*-0.1,
-    marginBottom: height*0.1,
+    marginTop: height*-0.15,
+    marginBottom: height*0.07,
   },
   button: {
     borderRadius: Border.br_3xs,
