@@ -1,12 +1,13 @@
-import * as React from "react";
-import { useState } from "react";
-import { Pressable, StyleSheet, View, Text, TextInput } from "react-native";
-import { Image } from "react-native";
+import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { FontSize, FontFamily, Color, Border, Padding } from "../GlobalStyles";
+import { StyleSheet, Pressable, Text, View, Image, TextInput, Dimensions, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Platform } from "react-native";
+import { FontSize, FontFamily, Color, Border } from "../GlobalStyles";
+
+const { width, height } = Dimensions.get("window");
 
 const Ustawienia3 = () => {
   const navigation = useNavigation();
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
   const [password3, setPassword3] = useState("");
@@ -18,351 +19,219 @@ const Ustawienia3 = () => {
       alert("Błedne hasło.");
     }
   };
+
   return (
-    <View style={styles.ustawienia3}>
-      <Text style={styles.zmieHaso}>Zmień hasło</Text>
-      <Pressable
-        style={styles.zamknij}
-        onPress={() => navigation.navigate("Ustawienia")}
-      >
-        <Image
-          style={styles.icon2}
-          contentFit="cover"
-          source={require("../assets/zamknij1.png")}
-        />
-      </Pressable>
-      <Image
-        style={styles.ustawienia3Child}
-        contentFit="cover"
-        source={require("../assets/ellipse-212.png")}
-      />
-      <Text style={styles.danka12}>@danka12</Text>
-      <Text style={styles.danuta}>Danuta</Text>
-      <Pressable
-        style={styles.przyciskiWyboru}
-        onPress={handlePassword}
-      >
-        <Text style={styles.zapiszZmiany}>Zapisz zmiany</Text>
-        <Image
-          style={styles.signOutSqureFillIcon}
-          contentFit="cover"
-          source={require("../assets/sign-out-squre-fill2.png")}
-        />
-      </Pressable>
-      <Pressable
-        style={styles.przyciskiWyboru1}
-        onPress={() => navigation.navigate("Ustawienia")}
-      >
-        <Text style={styles.anuluj}>Anuluj</Text>
-      </Pressable>
-      <View style={styles.panelLogowania}>
-        <View style={styles.potwierdzNoweHasoParent}>
-          <Text style={styles.potwierdzNoweHaso}>Potwierdz Nowe Hasło</Text>
-          <View style={styles.frame}>
-          <TextInput
-              secureTextEntry={true}
-              placeholder="Potwierdź nowe hasło"
-              className="rectangle1"
-              onChangeText={(text) => setPassword3(text)}
-              style={styles.rectangle1} />
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 64 : height*-0.5}
+      style={{ flex: 1 }}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.container}>
+          <Pressable
+            style={styles.closeButton}
+            onPress={() => navigation.goBack()}
+          >
+            <Image
+              style={styles.icon}
+              resizeMode="contain"
+              source={require("../assets/Zamknij.png")}
+            />
+          </Pressable>
+          <Text style={styles.header}>Zmień hasło</Text>
+          <View style={styles.user}>
+            <Image
+              style={styles.profilePic}
+              source={require("../assets/ellipse-213.png")}
+            />
+            <View style={styles.textContainer}>
+              <Text style={styles.username}>Danuta</Text>
+              <Text style={styles.userHandle}>@danka12</Text>
+            </View>
+          </View>
+          <View style={styles.inputContainer}>
+          <View style={styles.inputGroup}>
+              <Text style={styles.label}>Obecne hasło</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Wprowadź obecne hasło"
+                placeholderTextColor="#777777"
+                value={username}
+                onChangeText={setUsername}
+              />
+            </View>
+            <View style={styles.inputGroup}>
+              <Text style={styles.label}>Nowe hasło</Text>
+              <TextInput
+                style={styles.input}
+                secureTextEntry={true}
+                placeholder="Wprowadź nowe hasło"
+                placeholderTextColor="#777777"
+                value={password2}
+                onChangeText={setPassword2}
+              />
+            </View>
+            <View style={styles.inputGroup}>
+              <Text style={styles.label}>Potwierdź hasło</Text>
+              <TextInput
+                style={styles.input}
+                secureTextEntry={true}
+                placeholder="Wprowadź ponownie nowe hasło"
+                placeholderTextColor="#777777"
+                value={password3}
+                onChangeText={setPassword3}
+              />
+            </View>
+          </View>
+          <View style={styles.buttonsContainer}>
+            <Pressable
+              style={styles.button}
+              onPress={() => navigation.goBack()}
+            >
+              <Text style={styles.buttonText}>Anuluj</Text>
+            </Pressable>
+            <Pressable
+              style={[styles.button, styles.saveButton]}
+              onPress={handlePassword}
+            >
+              <Text style={styles.buttonText}>Zapisz zmiany</Text>
+            </Pressable>
           </View>
         </View>
-        <View style={styles.noweHasoParent}>
-          <Text style={styles.noweHaso}>Nowe Hasło</Text>
-          <View style={styles.frame1}>
-          <TextInput
-              secureTextEntry={true}
-              placeholder="Wprowadz nowe hasło"
-              className="rectangle1"
-              onChangeText={(text) => setPassword2(text)}
-              style={styles.rectangle1} />
-          </View>
-        </View>
-        <View style={styles.hasoParent}>
-          <Text style={styles.haso}>Hasło</Text>
-          <View style={styles.frame2}>
-          <TextInput
-              secureTextEntry={true}
-              placeholder="Wprowadz aktualne hasło"
-              className="rectangle1"
-              onChangeText={(text) => setPassword(text)}
-              style={styles.rectangle1} />
-          </View>
-        </View>
-      </View>
-    </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: Color.colorGray_500,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    paddingTop: height * 0.05,
+  },
+  closeButton: {
+    position: 'absolute',
+    top: height * 0.0769,
+    left: width * 0.0861,
+    width: width * 0.0667,
+    height: height * 0.0308,
+    zIndex: 2,
+  },
   icon: {
-    width: "100%",
-    height: "100%",
-  },
-  ikonaPowiadomie: {
-    position: "absolute",
-    left: 46,
-    top: 0,
     width: 24,
     height: 24,
   },
-  icon1: {
-    width: "100%",
-    height: "100%",
-  },
-  ikonaWyszukiwarki: {
-    position: "absolute",
-    left: 0,
-    top: 1,
-    width: 24,
-    height: 24,
-  },
-  grnyPasekNawigacyjny: {
-    position: "absolute",
-    top: 62,
-    left: 255,
-    width: 70,
-    height: 25,
-  },
-  zmieHaso: {
-    position: "absolute",
-    marginLeft: -195,
-    top: 123,
-    left: "50%",
-    fontSize: FontSize.size_13xl,
-    fontWeight: "800",
+  header: {
+    fontSize: FontSize.size_17xl,
     fontFamily: FontFamily.montserratExtraBold,
     color: Color.text,
     textAlign: "center",
-    width: 389,
-    height: 73,
+    marginTop: "15%",
+    marginBottom: "7%",
   },
-  icon2: {
-    width: "100%",
-    height: "100%",
-  },
-  zamknij: {
-    position: "absolute",
-    left: 24,
-    top: 63,
-    width: 24,
-    height: 24,
-  },
-  ustawienia3Child: {
-    position: "absolute",
-    marginLeft: -39,
-    top: 200,
-    left: "50%",
+  profilePic: {
     width: 77,
     height: 77,
+    borderRadius: 38.5, 
+    marginBottom: "3%",
   },
-  danka12: {
-    position: "absolute",
-    marginLeft: -37,
-    top: 321,
-    left: "50%",
-    fontSize: FontSize.size_sm,
+  profilePic2: {
+    width: 36,
+    height: 36,
+    borderRadius: 38.5, 
+    position: 'absolute',
+    right: width * 0.39,
+    top: height * 0.28,
+    zIndex: 1,
+  },
+  username: {
+    fontSize: FontSize.size_lg,
+    fontFamily: FontFamily.nav,
+    color: Color.text,
+    textAlign: "center",
+    marginBottom: "1%",
+  },
+  userHandle: {
+    fontSize: FontSize.size_xs,
     fontWeight: "600",
     fontFamily: FontFamily.montserratSemiBold,
     color: Color.colorDimgray_100,
-    textAlign: "left",
-    width: 74,
-    height: 20,
-  },
-  danuta: {
-    position: "absolute",
-    marginLeft: -36,
-    top: 294,
-    left: "50%",
-    fontSize: FontSize.size_lg,
-    fontWeight: "700",
-    fontFamily: FontFamily.nav,
-    color: Color.text,
-    textAlign: "left",
-    width: 71,
-    height: 20,
-  },
-  zapiszZmiany: {
-    position: "relative",
-    fontSize: FontSize.size_xs,
-    fontWeight: "700",
-    fontFamily: FontFamily.nav,
-    color: Color.text,
     textAlign: "center",
-    width: 125,
-    height: 14,
   },
-  signOutSqureFillIcon: {
-    position: "relative",
-    width: 22,
-    height: 17,
-    marginLeft: -110,
+  user: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
-  przyciskiWyboru: {
-    position: "absolute",
-    height: "3.76%",
-    width: "35.31%",
-    top: "81.79%",
-    right: "8.58%",
-    bottom: "14.45%",
-    left: "56.11%",
-    borderRadius: Border.br_3xs,
-    backgroundColor: Color.colorGainsboro,
-    borderStyle: "solid",
-    borderColor: Color.secondary,
-    borderWidth: 2,
+  textContainer: {
+    flexDirection: 'column', 
+    marginLeft: "7%", 
+  },
+  cameraIcon: {
+    position: 'absolute',
+    right: width * 0.405,
+    top: height * 0.287,
+    width: 24,
+    height: 24,
+    zIndex: 2,
+  },
+  inputContainer: {
+    width: width*0.8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: height*0.13,
+    marginBottom: "15%",
+    maxHeight: '20%',
+  },
+  inputGroup: {
+    width: '100%',
+    zIndex: 1,
+  },
+  input: {
+    backgroundColor: Color.colorGray_300,
+    borderRadius: Border.br_xs,
+    color: Color.text,
+    height: 54,
+    fontSize: FontSize.size_md,
+    fontFamily: FontFamily.montserratRegular,
+    paddingHorizontal: 20,
+    marginBottom: height * 0.02,
+  },
+  buttonsContainer: {
     flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-start",
-    paddingHorizontal: Padding.p_12xs,
-    paddingBottom: Padding.p_7xs,
+    justifyContent: "space-between",
+    width: width*0.7, 
+    marginTop: height * 0.05,
   },
-  anuluj: {
-    position: "relative",
-    fontSize: FontSize.size_xs,
-    fontWeight: "700",
-    fontFamily: FontFamily.nav,
-    color: Color.text,
-    textAlign: "center",
-    width: 125,
-    height: 14,
-  },
-  przyciskiWyboru1: {
-    position: "absolute",
-    height: "3.76%",
-    width: "35.31%",
-    top: "81.79%",
-    right: "55.53%",
-    bottom: "14.45%",
-    left: "9.17%",
-    borderRadius: Border.br_3xs,
+  button: {
     backgroundColor: Color.colorGainsboro,
-    borderStyle: "solid",
+    borderRadius: Border.br_3xs,
+    borderWidth: 2,
     borderColor: Color.colorDimgray_100,
+    paddingVertical: 5,
+    paddingHorizontal: 20,
+    height: 30.3,
+  },
+  buttonText: {
+    fontSize: FontSize.size_xs,
+    fontFamily: FontFamily.nav,
+    color: Color.text,
+    textAlign: "center",
+  },
+  saveButton: {
+    borderColor: Color.secondary,
+    borderRadius: Border.br_3xs,
     borderWidth: 2,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-start",
-    paddingBottom: Padding.p_7xs,
+    paddingVertical: 5,
+    paddingHorizontal: 20,
   },
-  potwierdzNoweHaso: {
-    position: "absolute",
-    top: 0,
-    left: 24,
+  label: {
     fontSize: FontSize.size_xs,
-    letterSpacing: 0.3,
     fontFamily: FontFamily.montserratRegular,
     color: Color.colorDarkgray_100,
-    textAlign: "left",
-  },
-  rectangle: {
-    flex: 1,
-    position: "relative",
-    borderRadius: Border.br_xs,
-    backgroundColor: Color.colorGray_300,
-    height: 54,
-  },
-  frame: {
-    position: "absolute",
-    top: 19,
-    left: 0,
-    width: 300,
-    overflow: "hidden",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-end",
-  },
-  potwierdzNoweHasoParent: {
-    position: "absolute",
-    top: 176,
-    left: 0,
-    width: 300,
-    height: 73,
-  },
-  noweHaso: {
-    position: "absolute",
-    top: 0,
-    left: 24,
-    fontSize: FontSize.size_xs,
-    letterSpacing: 0.3,
-    fontFamily: FontFamily.montserratRegular,
-    color: Color.colorDarkgray_100,
-    textAlign: "left",
-  },
-  rectangle1: {
-    paddingLeft: 10,
-    flex: 1,
-    position: "relative",
-    borderRadius: Border.br_xs,
-    backgroundColor: Color.colorGray_300,
-    height: 54,
-  },
-  frame1: {
-    position: "absolute",
-    top: 19,
-    left: 0,
-    width: 300,
-    overflow: "hidden",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-end",
-  },
-  noweHasoParent: {
-    position: "absolute",
-    top: 82,
-    left: 0,
-    width: 300,
-    height: 73,
-  },
-  haso: {
-    position: "absolute",
-    top: 0,
-    left: 24,
-    fontSize: FontSize.size_xs,
-    letterSpacing: 0.3,
-    fontFamily: FontFamily.montserratRegular,
-    color: Color.colorDarkgray_100,
-    textAlign: "left",
-  },
-  rectangle2: {
-    flex: 1,
-    position: "relative",
-    borderRadius: Border.br_xs,
-    backgroundColor: Color.colorGray_300,
-    height: 54,
-  },
-  frame2: {
-    position: "absolute",
-    top: 19,
-    left: 0,
-    width: 300,
-    overflow: "hidden",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-end",
-  },
-  hasoParent: {
-    position: "absolute",
-    top: -4,
-    left: 0,
-    width: 300,
-    height: 73,
-  },
-  panelLogowania: {
-    position: "absolute",
-    top: 351,
-    left: 33,
-    width: 280,
-    height: 231,
-  },
-  ustawienia3: {
-    position: "absolute",
-    borderRadius: Border.br_21xl,
-    backgroundColor: Color.colorGray_500,
-    flex: 1,
-    width: "100%",
-    height: 880,
-    overflow: "hidden",
+    marginBottom: 5,
+    marginLeft: 22,
   },
 });
 
