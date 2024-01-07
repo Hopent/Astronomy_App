@@ -1,51 +1,85 @@
-import * as React from "react";
-import { Text, StyleSheet, Pressable, View } from "react-native";
+import React,{ useState } from "react";
+import { Text, StyleSheet, TouchableOpacity, View } from "react-native";
 import { Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { FontSize, FontFamily, Color, Padding, Border } from "../GlobalStyles";
-import BottomNav from "../components/BottomNav";
 import TopNav_2 from "../components/TopNav_2";
+import BottomNav from "../components/BottomNav";
 
 const Galeria = () => {
+  const [currentImageIndex, setCurrentImageIndex] = useState(2);
   const navigation = useNavigation();
+  const imageSources = {
+    1: require('../assets/1_galeria.png'),
+    2: require('../assets/2_galeria.png'),
+  };
+  const photoData = [
+    {
+      title: 'Mgławica Oriona',
+      description: 'Zdjęcie przedstawia Wielką Mgławicę w Orionie, ukazując intensywne odcienie purpury i niebieskiego. W centrum widoczna jest młoda, gwiezdna formacja, otoczona chmurami pyłu i gazów.',
+      date: '08 lis',
+      author: 'John Smith',
+    },
+    {
+      title: 'Droga Mleczna na tle gór',
+      description: 'Na fotografii widać panoramiczny widok Drogi Mlecznej na tle górskiego krajobrazu. Złote pasma gwiazd oplatają masywne szczyty, tworząc spektakularny kontrast między niebem a ziemią.',
+      date: '15 mar 2023',
+      author: 'Anna Johnson',
+    },
+  ];
+
+
+  const changeImage = (direction) => {
+    setCurrentImageIndex(1);
+    const totalImages = Object.keys(imageSources).length;
+
+    let newIndex = currentImageIndex + direction;
+
+    if (newIndex < 1) {
+      newIndex = totalImages;
+    } else if (newIndex > totalImages) {
+      newIndex = 1;
+    }
+
+    setCurrentImageIndex(newIndex);
+  };
+
 
   return (
     <View style={styles.galeria3}>
       <Text style={styles.galeria1}>Galeria</Text>
       <View style={styles.galeria2}>
-        <View style={styles.zdjcie}>
+        <View style={styles.graphic_box}>
           <Image
-            style={styles.gwneIcon}
+            style={styles.main_graphic}
             contentFit="cover"
-            source={require("../assets/gwne.png")}
+            source={imageSources[currentImageIndex]}
           />
           <View style={styles.przyciskiWyboru}>
-            <Pressable style={styles.gwiazdy} onPress={() => {}}>
-              <Image
-                style={styles.icon3}
-                contentFit="cover"
-                source={require("../assets/gwiazdy.png")}
-              />
-            </Pressable>
+          <TouchableOpacity onPress={() => changeImage(1)}>
             <Image
-              style={styles.planetyIcon}
+              style={styles.left_button}
               contentFit="cover"
-              source={require("../assets/planety.png")}
+              source={require("../assets/left_arrow.png")}
             />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => changeImage(-1)}>
+            <Image
+                style={styles.right_button}
+                contentFit="cover"
+                source={require("../assets/right_arrow.png")}
+            />
+          </TouchableOpacity>
           </View>
         </View>
         <View style={styles.newsy}>
           <View style={styles.kafelek} />
-          <Text style={styles.naZdjciuMoemy}>
-            Na zdjęciu możemy podziwiać spiralną galaktykę znaną jako NGC 1232.
-            Znajduje się w gwiazdozbiorze Erydanu, około 65 milionów lat
-            świetlnych od naszej Ziemi. Jej wirujące ramiona składają się z
-            setek miliardów gwiazd, a w centrum widoczne jest jasne jądro, gdzie
-            gromadzą się gęste skupiska gwiazd.
+          <Text style={styles.PhotoInfo}>
+            {photoData[currentImageIndex - 1].description} 
           </Text>
-          <Text style={styles.oZdjciu}>O zdjęciu</Text>
-          <Text style={styles.fotNasacom}>Fot: NASA.com</Text>
-          <Text style={styles.lis2023}>08 lis 2023</Text>
+          <Text style={styles.title}>{photoData[currentImageIndex - 1].title}</Text>
+          <Text style={styles.author}>Fot: {photoData[currentImageIndex - 1].author}</Text>
+          <Text style={styles.date}>{photoData[currentImageIndex - 1].date}</Text>
         </View>
       </View>
       <TopNav_2 />
@@ -68,7 +102,7 @@ const styles = StyleSheet.create({
     width: 389,
     height: 73,
   },
-  gwneIcon: {
+  main_graphic: {
     position: "absolute",
     height: "104%",
     width: "102.67%",
@@ -81,44 +115,25 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     maxHeight: "100%",
   },
-  icon3: {
-    height: "100%",
-    width: "100%",
-    maxWidth: "100%",
-    overflow: "hidden",
-    maxHeight: "100%",
+  right_button: {
+    width: 50,
+    height: 50,
+    top: "35%",
+    left: "380%",
   },
-  gwiazdy: {
-    position: "absolute",
-    left: "85.13%",
-    top: "0%",
-    right: "0%",
-    bottom: "0%",
-    width: "14.87%",
-    height: "100%",
-  },
-  planetyIcon: {
-    position: "absolute",
-    height: "100%",
-    width: "14.87%",
-    top: "0%",
-    right: "85.13%",
-    bottom: "0%",
-    left: "0%",
-    maxWidth: "100%",
-    overflow: "hidden",
-    maxHeight: "100%",
+  left_button: {
+    width: 50,
+    height: 50,
+    left: 10,
+    top: "35%",
   },
   przyciskiWyboru: {
-    position: "absolute",
-    height: "20%",
-    width: "89.67%",
-    top: "39%",
-    right: "5.33%",
-    bottom: "41%",
-    left: "5%",
+    position: "relative",
+    height: "100%",
+    width: "100%",
+    flexDirection: 'row',
   },
-  zdjcie: {
+  graphic_box: {
     position: "absolute",
     height: "47.28%",
     width: "100%",
@@ -137,16 +152,8 @@ const styles = StyleSheet.create({
     left: "0%",
     borderRadius: Border.br_3xs,
     backgroundColor: Color.colorDarkslategray_200,
-    shadowColor: "rgba(0, 0, 0, 0.25)",
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowRadius: 4,
-    elevation: 4,
-    shadowOpacity: 1,
   },
-  naZdjciuMoemy: {
+  PhotoInfo: {
     position: "absolute",
     marginLeft: -121,
     top: 86,
@@ -159,7 +166,7 @@ const styles = StyleSheet.create({
     width: 244,
     height: 158,
   },
-  oZdjciu: {
+  title: {
     position: "absolute",
     height: "8.61%",
     marginLeft: -101,
@@ -173,12 +180,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
     width: 203,
   },
-  fotNasacom: {
+  author: {
     position: "absolute",
     height: "6.56%",
-    width: "31.67%",
     top: "6.56%",
-    left: "59.67%",
+    left: "52.67%",
     fontSize: FontSize.size_xs,
     letterSpacing: 0.3,
     fontWeight: "500",
@@ -186,10 +192,10 @@ const styles = StyleSheet.create({
     color: Color.colorDarkgray_100,
     textAlign: "left",
   },
-  lis2023: {
+  date: {
     position: "absolute",
     height: "6.48%",
-    width: "22.33%",
+    width: "30.33%",
     top: "6.48%",
     left: "9%",
     fontSize: FontSize.size_xs,
@@ -217,72 +223,6 @@ const styles = StyleSheet.create({
     left: "50%",
     width: 300,
   },
-  menu: {
-    position: "absolute",
-    top: "7.69%",
-    left: "9.7%",
-    fontSize: FontSize.size_base,
-    letterSpacing: 0.4,
-    fontWeight: "700",
-    fontFamily: FontFamily.nav,
-    color: Color.secondary,
-    textAlign: "center",
-  },
-  icon4: {
-    height: "100%",
-    width: "100%",
-    maxWidth: "100%",
-    overflow: "hidden",
-    maxHeight: "100%",
-  },
-  ikonaPowiadomie: {
-    position: "absolute",
-    left: "91.97%",
-    top: "3.85%",
-    right: "0%",
-    bottom: "3.85%",
-    width: "8.03%",
-    height: "92.31%",
-  },
-  icon5: {
-    height: "100%",
-    width: "100%",
-    maxWidth: "100%",
-    overflow: "hidden",
-    maxHeight: "100%",
-  },
-  ikonaMenu: {
-    position: "absolute",
-    left: "0%",
-    top: "0%",
-    right: "91.97%",
-    bottom: "7.69%",
-    width: "8.03%",
-    height: "92.31%",
-  },
-  icon6: {
-    height: "100%",
-    width: "100%",
-    maxWidth: "100%",
-    overflow: "hidden",
-    maxHeight: "100%",
-  },
-  ikonaWyszukiwarki: {
-    position: "absolute",
-    left: "76.59%",
-    top: "7.69%",
-    right: "15.38%",
-    bottom: "0%",
-    width: "8.03%",
-    height: "92.31%",
-  },
-  grnyPasekNawigacyjny: {
-    position: "absolute",
-    top: 61,
-    left: 26,
-    width: 299,
-    height: 26,
-  },
   galeria3: {
     position: "relative",
     borderRadius: Border.br_21xl,
@@ -290,7 +230,6 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     height: 780,
-    overflow: "hidden",
   },
 });
 

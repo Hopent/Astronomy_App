@@ -11,7 +11,6 @@ const Home = () => {
 
   const [astronomyData, setAstronomyData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [moonInfo, setMoonInfo] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {

@@ -39,7 +39,7 @@ const KatalogPlanet = () => {
         <Pressable
           style={styles.fazaKsiyca}
           planet="Wenus"
-          onPress={() => navigation.navigate("Wenus")}
+          onPress={() => navigation.navigate("Wenus", { planet: "Wenus" })}
         >
           <Text style={styles.ukadSoneczny}>Układ słoneczny</Text>
           <Text style={styles.wenus}>Wenus</Text>
@@ -53,7 +53,7 @@ const KatalogPlanet = () => {
         <Pressable
           style={styles.fazaKsiyca1}
           planet="Mars"
-          onPress={() => navigation.navigate("Wenus")}
+          onPress={() => navigation.navigate("Wenus", { planet: "Mars" })}
         >
           <Image
             style={styles.giphy2Icon}
