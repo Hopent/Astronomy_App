@@ -3,14 +3,20 @@ import { StyleSheet, View, Text, Pressable } from "react-native";
 import { Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Border, Color, FontSize, FontFamily } from "../GlobalStyles";
+import UserDataManager from '../components/UserDataManager';
+import { serverConfig } from '../config';
 import BottomNav from "../components/BottomNav";
 import TopNav_2 from "../components/TopNav_2";
 
 const Home = () => {
   const navigation = useNavigation();
-
+  const [name, setName] = useState(null);
   const [astronomyData, setAstronomyData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [nazwy,setNazwy] = useState();
+  const [punkty,setPunkty] = useState();
+
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,8 +37,38 @@ const Home = () => {
       }
     };
 
+
+    const readUserData = async () => {
+      const userData = await UserDataManager.getUserData();
+      if (userData) {
+        setName(userData.name);
+      } else {
+        console.log('Unable to read user data from cache');
+      }
+    };
+
+    const fetchRanks = async () => {
+      try {
+          const url = `${serverConfig.apiUrl}:${serverConfig.port}/quiz`;
+          const response = await fetch(url);
+          const data = await response.json();
+          data.sort((a, b) => b.points - a.points);
+          const top5Results = data.slice(0, 5);
+          console.log(top5Results);
+          const namesString = top5Results.map(result => result.name).join('\n');
+          const pointsString = top5Results.map(result => `${result.points} punktów`).join('\n');
+          setNazwy(namesString);
+          setPunkty(pointsString);
+          return data[0];
+      } catch (error) {
+          console.error('Error fetching routes', error);
+      }
+    };
+
+    fetchRanks();
+    readUserData();
     fetchData();
-  }, []);
+  }, [navigation]);
 
 
   return (
@@ -69,23 +105,12 @@ const Home = () => {
             contentFit="cover"
             source={require("../assets/sign-out-squre-fill1.png")}
           />
-          <Text style={styles.punktw200Punktw}>{`
-          220 punktów
-          200 punktów
-          180 punktów
-          170 punktów
-          165 punktów
-          `}</Text>
-          <Text style={styles.pokerGabriel12Maxas}>{`
-          Poker
-          Gabriel12
-          maxas
-          Monik
-          Mieszko1`}</Text>
+          <Text style={styles.punktw200Punktw}>{punkty}</Text>
+          <Text style={styles.pokerGabriel12Maxas}>{nazwy}</Text>
           <Text style={styles.rankingWQuizie}>Ranking w quizie</Text>
         </View>
       </View>
-      <Text style={styles.witajUser}>Witaj, user</Text>
+      <Text style={styles.witajUser}>Witaj, {name}</Text>
 
       <TopNav_2 />
       <BottomNav />

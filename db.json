@@ -1,0 +1,39 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "login": "miudi",
+      "password": "12345",
+      "name": "Hamik"
+    },
+    {
+      "id": "2",
+      "login": "miudik",
+      "password": "12345678",
+      "name": "Nazwaa"
+    },
+    {
+      "id": "cb44",
+      "login": "miudiq",
+      "password": "12345678",
+      "name": "miudiq"
+    }
+  ],
+  "quiz": [
+    {
+      "id": "1",
+      "name": "Lukasz",
+      "points": 4
+    },
+    {
+      "id": "7643",
+      "name": "Maciej",
+      "points": 9
+    },
+    {
+      "id": "0c05",
+      "name": "Krystian",
+      "points": 3
+    }
+  ]
+}

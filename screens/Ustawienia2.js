@@ -1,18 +1,76 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { StyleSheet, Pressable, Text, View, Image, TextInput, Dimensions, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Platform } from "react-native";
+import { StyleSheet, Pressable, Text, View, Image, TextInput, Dimensions, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Platform, Alert } from "react-native";
 import { FontSize, FontFamily, Color, Border } from "../GlobalStyles";
+import UserDataManager from '../components/UserDataManager';
+import { serverConfig } from '../config';
 
 const { width, height } = Dimensions.get("window");
 
 const Ustawienia2 = () => {
   const navigation = useNavigation();
+  const [name, setName] = useState(null);
+  const [login,setLogin] = useState(null);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSaveChanges = () => {
+  const fetchUser = async () => {
+    try {
+        const url = `${serverConfig.apiUrl}:${serverConfig.port}/users?login=${login}`;
+        const response = await fetch(url);
+        const data = await response.json();
 
+        return data[0];
+    } catch (error) {
+        Alert.alert('Incorrect login', 'Incorrect login, please try again.');
+        console.error('Error fetching routes', error);
+    }
   };
+
+  const handleSaveChanges = async () => {
+    try {
+      const userData = await fetchUser();
+      if(userData.password === password){
+        if(userData.login === login){
+          userData.name = username;
+
+          const updateUrl = `${serverConfig.apiUrl}:${serverConfig.port}/users/${userData.id}`;
+          const updateResponse = await fetch(updateUrl, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userData),
+          });
+      
+          if (updateResponse.ok) {
+            UserDataManager.saveUserDataToCache(userData);
+            console.log('User login updated successfully');
+          } else {
+            console.log('Error updating user login');
+          }
+          navigation.goBack();
+        }
+      }
+
+    }catch (error) {
+      console.error('Error handling collecting Data', error);
+    }
+  };
+
+  useEffect(() => {
+    const readUserData = async () => {
+      const userData = await UserDataManager.getUserData();
+      if (userData) {
+        setName(userData.name);
+        setLogin(userData.login);
+      } else {
+        console.log('Unable to read user data from cache');
+      }
+    };
+
+    readUserData();
+  }, []);
 
   return (
     <KeyboardAvoidingView
@@ -47,8 +105,8 @@ const Ustawienia2 = () => {
               source={require("../assets/ellipse-213.png")}
             />
             <View style={styles.textContainer}>
-              <Text style={styles.username}>Danuta</Text>
-              <Text style={styles.userHandle}>@danka12</Text>
+              <Text style={styles.username}>{name}</Text>
+              <Text style={styles.userHandle}>@{login}</Text>
             </View>
           </View>
           <View style={styles.inputContainer}>

@@ -1,12 +1,31 @@
-import * as React from "react";
+import React, { useState, useEffect } from 'react';
 import { Image, StyleSheet, Pressable, View, Text, Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { FontSize, FontFamily, Color } from "../GlobalStyles";
+import UserDataManager from '../components/UserDataManager';
+
 
 const { width, height } = Dimensions.get("window");
 
 const Menu = () => {
   const navigation = useNavigation();
+  const [name, setName] = useState(null);
+  const [login,setLogin] = useState(null);
+
+
+  useEffect(() => {
+    const readUserData = async () => {
+      const userData = await UserDataManager.getUserData();
+      if (userData) {
+        setName(userData.name);
+        setLogin(userData.login);
+      } else {
+        console.log('Unable to read user data from cache');
+      }
+    };
+
+    readUserData();
+  }, []);
 
   return (
     <View style={styles.menuContainer}>
@@ -27,8 +46,8 @@ const Menu = () => {
           style={styles.profilePic}
           source={require("../assets/ellipse-212.png")}
         />
-        <Text style={styles.profileName}>Danuta</Text>
-        <Text style={styles.profileUsername}>@danka12</Text>
+        <Text style={styles.profileName}>{name}</Text>
+        <Text style={styles.profileUsername}>@{login}</Text>
       </View>
 
       <View style={styles.menuItems}>

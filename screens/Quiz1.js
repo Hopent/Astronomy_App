@@ -2,6 +2,8 @@ import React, { useState,useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet,Image,Pressable } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
 import { FontSize, FontFamily, Color, Border, Padding } from "../GlobalStyles";
+import UserDataManager from '../components/UserDataManager';
+import { serverConfig } from '../config';
 import TopNav_2 from "../components/TopNav_2";
 import BottomNav from "../components/BottomNav";
 
@@ -57,13 +59,30 @@ const Quiz1 = () => {
       correctAnswer: 'Jupiter',
     },
   ];
-  
+
+
 
 const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState({ positive: 0, negative: 0 });
   const [timer, setTimer] = useState(10);
   const [answerClicked, setAnswerClicked] = useState(false);
   const [answeredCurrentQuestion, setAnsweredCurrentQuestion] = useState(false);
+  const [login,setLogin] = useState();
+  const [name,setName] = useState();
+
+  useEffect(() => {
+    const readUserData = async () => {
+      const userData = await UserDataManager.getUserData();
+      if (userData) {
+        setLogin(userData.login);
+        setName(userData.name);
+      } else {
+        console.log('Unable to read user data from cache');
+      }
+    };
+
+    readUserData();
+  }, []);
 
   useEffect(() => {
     let intervalId;
@@ -82,6 +101,20 @@ const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     return () => clearInterval(intervalId);
   }, [timer, answerClicked]);
 
+
+  const publicRank = async (newRank) => {
+      try {
+        const response = await fetch(`${serverConfig.apiUrl}:${serverConfig.port}/quiz`, {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(newRank),
+        });
+    } catch (error) {
+      console.error('POST error', error);
+    }
+  }
   const handleAnswerClick = (selectedAnswer) => {
     if (!answeredCurrentQuestion) { 
       setAnsweredCurrentQuestion(true);
@@ -106,6 +139,13 @@ const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
           setAnsweredCurrentQuestion(false);
         } else {
           alert('Koniec quizu!');
+
+          const newRank = {
+            name: name,
+            points: score.positive
+          };
+          publicRank(newRank);
+          navigation.goBack();
         }
       }, 2000);
    }

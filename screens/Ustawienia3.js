@@ -1,22 +1,72 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, Pressable, Text, View, Image, TextInput, Dimensions, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Platform } from "react-native";
 import { FontSize, FontFamily, Color, Border } from "../GlobalStyles";
+import UserDataManager from '../components/UserDataManager';
+import { serverConfig } from '../config';
 
 const { width, height } = Dimensions.get("window");
 
 const Ustawienia3 = () => {
   const navigation = useNavigation();
-  const [username, setUsername] = useState("");
+  const [login,setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
   const [password3, setPassword3] = useState("");
 
-  const handlePassword = () => {
-    if (password2 == password3) {
-      navigation.navigate("Ustawienia");
-    } else {
-      alert("Błedne hasło.");
+  const fetchUser = async () => {
+    try {
+        const url = `${serverConfig.apiUrl}:${serverConfig.port}/users?login=${login}`;
+        const response = await fetch(url);
+        const data = await response.json();
+
+        return data[0];
+    } catch (error) {
+        Alert.alert('Incorrect login', 'Incorrect login, please try again.');
+        console.error('Error fetching routes', error);
+    }
+  };
+
+  useEffect(() => {
+    const readUserData = async () => {
+      const userData = await UserDataManager.getUserData();
+      if (userData) {
+        setLogin(userData.login);
+      } else {
+        console.log('Unable to read user data from cache');
+      }
+    };
+
+    readUserData();
+  }, []);
+
+
+  const handlePassword = async () => {
+    try {
+        if (password2 === password3) {
+          const userData = await fetchUser();
+          if(password === userData.password){
+            userData.password = password2;
+            const updateUrl = `${serverConfig.apiUrl}:${serverConfig.port}/users/${userData.id}`;
+              const updateResponse = await fetch(updateUrl, {
+                method: 'PUT',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(userData),
+              });
+            alert("Hasło zostało zmienione!");
+            navigation.navigate("Ustawienia");
+          }else{
+            console.log("Jeden"+password);
+            console.log("Dwa"+userData.password);
+            alert("Błędne hasło konta!");
+          }
+        } else {
+          alert("Hasła są różne!");
+        }
+    }catch (error) {
+      console.error('Error handling collecting Data', error);
     }
   };
 
@@ -54,10 +104,11 @@ const Ustawienia3 = () => {
               <Text style={styles.label}>Obecne hasło</Text>
               <TextInput
                 style={styles.input}
+                secureTextEntry={true}
                 placeholder="Wprowadź obecne hasło"
                 placeholderTextColor="#777777"
-                value={username}
-                onChangeText={setUsername}
+                value={password}
+                onChangeText={setPassword}
               />
             </View>
             <View style={styles.inputGroup}>

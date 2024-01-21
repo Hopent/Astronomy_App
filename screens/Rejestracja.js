@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { StyleSheet, Pressable, Text, View, Image, TextInput, Dimensions, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Platform, Linking } from "react-native";
+import { StyleSheet, Pressable, Text, View, Image, TextInput, Dimensions, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Platform, Linking, Alert } from "react-native";
 import { FontSize, FontFamily, Color, Border } from "../GlobalStyles";
+import { serverConfig } from '../config';
 
 const { width, height } = Dimensions.get("window");
 
@@ -11,13 +12,55 @@ const Rejestracja = () => {
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
   
-  const handleRegister = () => {
-    if (password == password2) {
-      navigation.navigate("Logowanie");
-    } else {
-      alert("Hasła nie są takie same. Proszę wprowadzić poprawne hasło.");
+  const handleRegister = async () => {
+    if (login.length < 4) {
+        Alert.alert('Login', 'Login must be at least 4 characters long.');
+        return;
     }
-  };
+
+    if (password.length < 6) {
+        Alert.alert('Weak Password', 'Password must be at least 6 characters long.');
+        return;
+    }
+
+    if (password != password2) {
+        Alert.alert('Password', 'Passwords must be equal.');
+        return;
+    }
+
+
+    const newUser = {
+        login: login,
+        password: password,
+        name: login,
+    };
+
+    try {
+        const checkUserResponse = await fetch(`${serverConfig.apiUrl}:${serverConfig.port}/users?login=${login}`);
+        const existingUser = await checkUserResponse.json();
+
+        if (existingUser.length > 0) {
+            Alert.alert('Login Exists', 'This login is already taken. Please choose another one.');
+            return;
+        }
+
+        const response = await fetch(`${serverConfig.apiUrl}:${serverConfig.port}/users`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(newUser),
+        });
+
+        if (response.ok) {
+            navigation.goBack();
+        } else {
+            console.error('Adding user error', response.statusText);
+        }
+    } catch (error) {
+        console.error('POST error', error);
+    }
+};
 
   const handlePrivacyPolicyPress = () => {
     const privacyPolicyURL = "https://www.lipsum.com/"; 

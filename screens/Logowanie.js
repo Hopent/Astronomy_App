@@ -1,20 +1,58 @@
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { StyleSheet, Pressable, Text, View, Image, TextInput, Dimensions, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Platform } from "react-native";
+import { StyleSheet, Pressable, Text, View, Image, TextInput, Dimensions, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Platform,Alert } from "react-native";
 import { FontSize, FontFamily, Color, Border } from "../GlobalStyles";
+import { serverConfig } from '../config';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import UserDataManager from '../components/UserDataManager';
 
 const { width, height } = Dimensions.get("window");
 
 const Logowanie = () => {
+
   const navigation = useNavigation();
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = () => {
-    if (login === password) {
-      navigation.navigate("Home");
-    } else {
-      alert("Zły login lub hasło.");
+  const fetchUser = async () => {
+    try {
+        const url = `${serverConfig.apiUrl}:${serverConfig.port}/users?login=${login}`;
+        const response = await fetch(url);
+        const data = await response.json();
+
+        return data[0];
+    } catch (error) {
+        Alert.alert('Incorrect login1', 'Incorrect login, please try again.');
+        console.error('Error fetching routes', error);
+    }
+  };
+
+
+
+  const handleLogin = async () => {
+    try {
+      const userData = await fetchUser();
+
+      if (!userData) {
+          Alert.alert('Incorrect login2', 'Incorrect login, please try again.');
+          return;
+      }
+
+      if (password === userData.password) {
+          const userDataContext = {
+            login: userData.login,
+            name: userData.name
+          };
+          UserDataManager.saveUserDataToCache(userDataContext);
+          navigation.navigate("Home");
+      }
+      else {
+          Alert.alert('Incorrect password', 'Incorrect password, please try again.');
+          return;
+      }
+    }catch (error) {
+      Alert.alert('Incorrect login', 'Incorrect login, please try again.');
+      console.error('Error handling login', error);
     }
   };
 
