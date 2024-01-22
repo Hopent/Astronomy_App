@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     color: Color.text,
     textAlign: "center",
     width: 80,
-    height: 15
+    height: 20
   },
   przyciskiWyboru: {
     position: "absolute",
