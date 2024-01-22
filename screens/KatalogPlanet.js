@@ -36,8 +36,22 @@ const KatalogPlanet = () => {
         </Pressable>
       </View>
       <View style={styles.kafelki}>
-        <Pressable
+      <Pressable
           style={styles.fazaKsiyca}
+          planet="merkury"
+          onPress={() => navigation.navigate("Wenus", { planet: "Merkury" })}
+        >
+          <Image
+            style={styles.giphy3Icon}
+            contentFit="cover"
+            source={require("../assets/giphy-31.png")}
+          />
+          <Text style={styles.ukadSoneczny3}>Układ słoneczny</Text>
+          <Text style={styles.merkury}>Merkury</Text>
+          <Text style={styles.mlnKmOd3}>58 mln km od Słońca</Text>
+        </Pressable>
+        <Pressable
+          style={styles.fazaKsiyca3}
           planet="Wenus"
           onPress={() => navigation.navigate("Wenus", { planet: "Wenus" })}
         >
@@ -51,6 +65,20 @@ const KatalogPlanet = () => {
           />
         </Pressable>
         <Pressable
+          style={styles.fazaKsiyca2}
+          planet="ziemia"
+          onPress={() => navigation.navigate("Wenus", { planet: "Ziemia" })}
+        >
+          <Image
+            style={styles.giphy4Icon}
+            contentFit="cover"
+            source={require("../assets/giphy-41.png")}
+          />
+          <Text style={styles.ukadSoneczny2}>Układ słoneczny</Text>
+          <Text style={styles.ziemia}>Ziemia</Text>
+          <Text style={styles.mlnKmOd2}>150 mln km od Słońca</Text>
+        </Pressable>
+                <Pressable
           style={styles.fazaKsiyca1}
           planet="Mars"
           onPress={() => navigation.navigate("Wenus", { planet: "Mars" })}
@@ -65,23 +93,9 @@ const KatalogPlanet = () => {
           <Text style={styles.mlnKmOd1}>170 mln km od Słońca</Text>
         </Pressable>
         <Pressable
-          style={styles.fazaKsiyca2}
-          planet="ziemia"
-          onPress={() => navigation.navigate("Wenus")}
-        >
-          <Image
-            style={styles.giphy4Icon}
-            contentFit="cover"
-            source={require("../assets/giphy-41.png")}
-          />
-          <Text style={styles.ukadSoneczny2}>Układ słoneczny</Text>
-          <Text style={styles.ziemia}>Ziemia</Text>
-          <Text style={styles.mlnKmOd2}>150 mln km od Słońca</Text>
-        </Pressable>
-        <Pressable
           style={styles.fazaKsiyca3}
-          planet="merkury"
-          onPress={() => navigation.navigate("Wenus")}
+          planet="jowisz"
+          onPress={() => navigation.navigate("Wenus", { planet: "Jowisz" })}
         >
           <Image
             style={styles.giphy3Icon}
@@ -89,13 +103,13 @@ const KatalogPlanet = () => {
             source={require("../assets/giphy-31.png")}
           />
           <Text style={styles.ukadSoneczny3}>Układ słoneczny</Text>
-          <Text style={styles.merkury}>Merkury</Text>
-          <Text style={styles.mlnKmOd3}>58 mln km od Słońca</Text>
+          <Text style={styles.merkury}>Jowisz</Text>
+          <Text style={styles.mlnKmOd3}>778 mln km od Słońca</Text>
         </Pressable>
         <Pressable
           style={styles.fazaKsiyca3}
-          planet="merkury"
-          onPress={() => navigation.navigate("Wenus")}
+          planet="saturn"
+          onPress={() => navigation.navigate("Wenus", { planet: "Saturn" })}
         >
           <Image
             style={styles.giphy3Icon}
@@ -103,13 +117,13 @@ const KatalogPlanet = () => {
             source={require("../assets/giphy-31.png")}
           />
           <Text style={styles.ukadSoneczny3}>Układ słoneczny</Text>
-          <Text style={styles.merkury}>Merkury</Text>
-          <Text style={styles.mlnKmOd3}>58 mln km od Słońca</Text>
+          <Text style={styles.merkury}>Saturn</Text>
+          <Text style={styles.mlnKmOd3}>1,4 mld km od Słońca</Text>
         </Pressable>
         <Pressable
           style={styles.fazaKsiyca3}
-          planet="merkury"
-          onPress={() => navigation.navigate("Wenus")}
+          planet="uran"
+          onPress={() => navigation.navigate("Wenus", { planet: "Uran" })}
         >
           <Image
             style={styles.giphy3Icon}
@@ -117,8 +131,22 @@ const KatalogPlanet = () => {
             source={require("../assets/giphy-31.png")}
           />
           <Text style={styles.ukadSoneczny3}>Układ słoneczny</Text>
-          <Text style={styles.merkury}>Merkury</Text>
-          <Text style={styles.mlnKmOd3}>58 mln km od Słońca</Text>
+          <Text style={styles.merkury}>Uran</Text>
+          <Text style={styles.mlnKmOd3}>2,9 mld km od Słońca</Text>
+        </Pressable>
+        <Pressable
+          style={styles.fazaKsiyca3}
+          planet="neptun"
+          onPress={() => navigation.navigate("Wenus", { planet: "Neptun" })}
+        >
+          <Image
+            style={styles.giphy3Icon}
+            contentFit="cover"
+            source={require("../assets/giphy-31.png")}
+          />
+          <Text style={styles.ukadSoneczny3}>Układ słoneczny</Text>
+          <Text style={styles.merkury}>Neptun</Text>
+          <Text style={styles.mlnKmOd3}>4,5 mld km od Słońca</Text>
         </Pressable>
       </View>
     </View>
@@ -543,7 +571,7 @@ const styles = StyleSheet.create({
     backgroundColor: Color.colorGray_500,
     flex: 1,
     width: "100%",
-    height: 1300,
+    height: 1500,
   },
 });
 
