@@ -10,8 +10,8 @@ const Galeria = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(2);
   const navigation = useNavigation();
   const imageSources = {
-    1: require('../assets/1_galeria.png'),
-    2: require('../assets/2_galeria.png'),
+    1: require('../assets/5_galeria.png'),
+    2: require('../assets/6_galeria.png'),
   };
   const photoData = [
     {
@@ -104,43 +104,40 @@ const styles = StyleSheet.create({
   },
   main_graphic: {
     position: "absolute",
-    height: "104%",
-    width: "102.67%",
-    top: "0%",
-    right: "-1.33%",
-    bottom: "-4%",
-    left: "-1.33%",
-    borderRadius: Border.br_3xs,
-    maxWidth: "100%",
-    overflow: "hidden",
-    maxHeight: "100%",
+    width: "100%", 
+    height: "100%", 
+    borderRadius: Border.br_3xs, 
+    resizeMode: 'cover', 
   },
   right_button: {
     width: 50,
     height: 50,
     top: "35%",
     left: "380%",
+    backgroundColor: 'transparent',
   },
   left_button: {
     width: 50,
     height: 50,
     left: 10,
     top: "35%",
+    backgroundColor: 'transparent',
   },
   przyciskiWyboru: {
     position: "relative",
     height: "100%",
     width: "100%",
     flexDirection: 'row',
+    backgroundColor: "transparent",
   },
   graphic_box: {
     position: "absolute",
-    height: "47.28%",
-    width: "100%",
-    top: "0%",
-    right: "0%",
-    bottom: "52.72%",
-    left: "0%",
+    height: "47.28%", 
+    width: "100%", 
+    top: 0,
+    right: 0,
+    left: 0,
+    borderRadius: Border.br_3xs, 
   },
   kafelek: {
     position: "absolute",
