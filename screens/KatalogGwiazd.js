@@ -39,7 +39,7 @@ const KatalogGwiazd = () => {
         <Pressable
           style={styles.fazaKsiyca}
           planet="delta"
-          onPress={() => navigation.navigate("Wenus")}
+          onPress={() => navigation.navigate("Wenus", { planet: "Delta" })}
         >
           <Text style={styles.gwiazdozbirAgla}>Gwiazdozbiór Żagla</Text>
           <Text style={styles.deltaVelorum}>Delta Velorum</Text>
@@ -53,7 +53,7 @@ const KatalogGwiazd = () => {
         <Pressable
           style={styles.fazaKsiyca1}
           planet="suhail"
-          onPress={() => navigation.navigate("Wenus")}
+          onPress={() => navigation.navigate("Wenus", { planet: "Suhail" })}
         >
           <Text style={styles.gwiazdozbirAgla1}>Gwiazdozbiór Żagla</Text>
           <Text style={styles.suhail}>Suhail</Text>
@@ -67,7 +67,7 @@ const KatalogGwiazd = () => {
         <Pressable
           style={styles.fazaKsiyca2}
           planet="syriusz"
-          onPress={() => navigation.navigate("Wenus")}
+          onPress={() => navigation.navigate("Wenus", { planet: "Syriusz" })}
         >
           <Text style={styles.gwiazdozbirPsa}>Gwiazdozbiór Psa</Text>
           <Text style={styles.syriusz}>Syriusz</Text>
@@ -81,11 +81,11 @@ const KatalogGwiazd = () => {
         <Pressable
           style={styles.fazaKsiyca3}
           planet="akrtur"
-          onPress={() => navigation.navigate("Wenus")}
+          onPress={() => navigation.navigate("Wenus", { planet: "Akrtur" })}
         >
           <Text style={styles.gwiazdozbirWolarza}>Gwiazdozbiór Wolarza</Text>
           <Text style={styles.akrtur}>Akrtur</Text>
-          <Text style={styles.lyOdOd}>37 ly od od Słońca</Text>
+          <Text style={styles.lyOdOd}>37 ly od Słońca</Text>
           <Image
             style={styles.giphy4Icon}
             contentFit="cover"
