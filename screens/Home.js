@@ -75,7 +75,7 @@ const Home = () => {
     <View style={styles.home1}>
       <View style={styles.panele}>
         <View style={styles.fazaKsiyca1}>
-          <View style={styles.kafelek} />
+          <View style={styles.kafelek}>
           <Image
             style={styles.giphy3Icon}
             contentFit="cover"
@@ -84,13 +84,14 @@ const Home = () => {
           {loading ? (
             <Text>Loading...</Text>
             ) : (
-              <View style={styles.ksiezyc}>
-                    <Text>Date: {astronomyData && astronomyData.date}</Text>
-                    <Text>Time: {astronomyData && astronomyData.current_time}</Text>
-                    <Text>Moon Distance: {astronomyData && parseFloat(astronomyData.moon_distance).toFixed(2)} KM</Text>
-                    <Text>Moon Altitude: {astronomyData && parseFloat(astronomyData.moon_altitude).toFixed(2)} KM</Text>
-                  </View>
+              <View style={styles.ksiezycBox}>
+                <Text style={styles.ksiezycText}>Date: {astronomyData?.date}</Text>
+                <Text style={styles.ksiezycText}>Time: {astronomyData?.current_time}</Text>
+                <Text style={styles.ksiezycText}>Moon Distance: {parseFloat(astronomyData?.moon_distance).toFixed(2)} KM</Text>
+                <Text style={styles.ksiezycText}>Moon Altitude: {parseFloat(astronomyData?.moon_altitude).toFixed(2)} KM</Text>
+              </View>
             )}
+            </View>
           <Text style={styles.fazaKsiyca}>Faza księżyca</Text>
         </View>
         <View style={styles.ranking}>
@@ -122,10 +123,10 @@ const styles = StyleSheet.create({
   kafelek: {
     position: "absolute",
     height: "81.06%",
-    marginLeft: -150,
-    top: "18.94%",
-    bottom: "0%",
+    width: 300, 
+    top: "18.94%", 
     left: "50%",
+    marginLeft: -150, 
     borderRadius: Border.br_3xs,
     backgroundColor: Color.dark,
     shadowColor: "rgba(0, 0, 0, 0.25)",
@@ -136,13 +137,12 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 4,
     shadowOpacity: 1,
-    width: 300,
   },
   giphy3Icon: {
     position: "absolute",
-    height: "81.06%",
+    height: "100%",
     width: "32%",
-    top: "18.94%",
+    top: "1%",
     right: "0%",
     bottom: "0%",
     left: "68%",
@@ -373,6 +373,18 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     height: 780,
+  },
+  ksiezycBox: {
+    alignItems: 'left', 
+    padding: 20,
+    paddingLeft: 15,
+  },
+  ksiezycText: {
+    color: Color.colorDarkgray_100,
+    fontSize: FontSize.size_xs,
+    letterSpacing: 0.3,
+    fontWeight: "500",
+    fontFamily: FontFamily.montserratMedium,
   },
 });
 
