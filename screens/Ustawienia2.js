@@ -1,18 +1,36 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { StyleSheet, Pressable, Text, View, Image, TextInput, Dimensions, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Platform, Alert } from "react-native";
+import {
+  StyleSheet,
+  Pressable,
+  Text,
+  View,
+  Image,
+  TextInput,
+  Dimensions,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  Keyboard,
+  Platform,
+  Alert,
+  TouchableOpacity,
+} from "react-native";
+import { Camera } from 'expo-camera';
+import * as FileSystem from 'expo-file-system';
 import { FontSize, FontFamily, Color, Border } from "../GlobalStyles";
 import UserDataManager from '../components/UserDataManager';
 import { serverConfig } from '../config';
 
 const { width, height } = Dimensions.get("window");
 
-const Ustawienia2 = () => {
-  const navigation = useNavigation();
-  const [name, setName] = useState(null);
-  const [login,setLogin] = useState(null);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const Ustawienia2 = () => {
+    const navigation = useNavigation();
+    const [name, setName] = useState(null);
+    const [login, setLogin] = useState(null);
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [profilePicUri, setProfilePicUri] = useState(require("../assets/ellipse-213.png"));
+    const cameraRef = useRef(null);
 
   const fetchUser = async () => {
     try {
@@ -58,6 +76,32 @@ const Ustawienia2 = () => {
     }
   };
 
+  const handleTakePicture = async () => {
+    const { status } = await Camera.requestCameraPermissionsAsync();
+    if (status !== 'granted') {
+      Alert.alert('Camera permission not granted');
+      return;
+    }
+  
+    if (cameraRef.current) {
+      try {
+        const photo = await cameraRef.current.takePictureAsync();
+        const destination = `${FileSystem.documentDirectory}profilePicture.jpg`;
+  
+        await FileSystem.moveAsync({
+          from: photo.uri,
+          to: destination,
+        });
+        setProfilePicUri({ uri: destination });
+      } catch (error) {
+        console.error('Error taking picture:', error);
+        Alert.alert('Error', 'Could not take picture.');
+      }
+    } else {
+      Alert.alert('Error', 'Camera not ready.');
+    }
+  };
+  
   useEffect(() => {
     const readUserData = async () => {
       const userData = await UserDataManager.getUserData();
@@ -75,7 +119,7 @@ const Ustawienia2 = () => {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
-      keyboardVerticalOffset={Platform.OS === "ios" ? 64 : height*-0.5}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 64 : height * -0.5}
       style={{ flex: 1 }}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -91,26 +135,38 @@ const Ustawienia2 = () => {
             />
           </Pressable>
           <Text style={styles.header}>Edytuj profil</Text>
+
+          <Image
+              style={styles.cameraIcon}
+              source={require("../assets/cameraplusoutline.png")}
+            />
           <Image
             style={styles.profilePic2}
             source={require("../assets/Background.png")}
           />
-          <Image
+          <TouchableOpacity
             style={styles.cameraIcon}
-            source={require("../assets/cameraplusoutline.png")}
+            onPress={handleTakePicture}
+          >
+            <Image
+            style={styles.profilePic2}
+            source={require("../assets/Background.png")}
           />
+          </TouchableOpacity>
+
           <View style={styles.user}>
             <Image
               style={styles.profilePic}
-              source={require("../assets/ellipse-213.png")}
+              source={profilePicUri}
             />
             <View style={styles.textContainer}>
               <Text style={styles.username}>{name}</Text>
               <Text style={styles.userHandle}>@{login}</Text>
             </View>
           </View>
+
           <View style={styles.inputContainer}>
-          <View style={styles.inputGroup}>
+            <View style={styles.inputGroup}>
               <Text style={styles.label}>Nazwa użytkownika</Text>
               <TextInput
                 style={styles.input}
@@ -132,6 +188,7 @@ const Ustawienia2 = () => {
               />
             </View>
           </View>
+
           <View style={styles.buttonsContainer}>
             <Pressable
               style={styles.button}
@@ -281,6 +338,11 @@ const styles = StyleSheet.create({
     color: Color.colorDarkgray_100,
     marginBottom: 5,
     marginLeft: 22,
+  },
+  profilePicContainer: {
+    width: 77, 
+    height: 77, 
+    position: 'relative',
   },
 });
 
