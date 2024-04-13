@@ -1,4 +1,4 @@
-# Recommended next steps:
+# Recommended steps:
 Note: Make sure you have installed react native code dependencies [here](https://reactnative.dev/docs/environment-setup#installing-dependencies)
 
 ### To preview and run the project on your device:
