@@ -1,4 +1,4 @@
 export const serverConfig = {
-    apiUrl: 'http://127.0.0.1', //ip pod którym jest dostępny serwer json
-    port: 5, //port pod którym jest dostępny server json
+    apiUrl: 'ip', //ip pod którym jest dostępny serwer json
+    port: 9999, //port pod którym jest dostępny server json
 };

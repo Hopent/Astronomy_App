@@ -14,6 +14,7 @@ import {
   Platform,
   Alert,
   TouchableOpacity,
+  Button,
 } from "react-native";
 import { Camera } from 'expo-camera';
 import * as FileSystem from 'expo-file-system';
